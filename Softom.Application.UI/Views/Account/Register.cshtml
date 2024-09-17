@@ -1,0 +1,79 @@
+﻿@{
+    Layout = "_Layout_Register";
+}
+@model RegisterVM
+
+<div class="card border-hover-primary">
+
+    <!--begin::Header-->
+    <div class="card-header">
+        <div class="card-title">
+            <img src="assets/media/svg/brand-logos/kanba.svg" alt="image" class="p-3" width="30%" /><h3 class="text-gray-800">Register Details</h3>
+        </div>
+    </div>
+    <!--end::Header-->
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form class="row" method="post">
+                    <input asp-for="RedirectUrl" hidden />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-floating mb-3 col-md-12">
+                    </div>
+                    <div class="form-floating mb-3 col-md-12">
+                        <input asp-for="Email" class="form-control" aria-required="true" />
+                        <label asp-for="Email" class="ms-2 text-muted"></label>
+                        <span asp-validation-for="Email" class="text-danger" />
+                    </div>
+                    <div class="form-floating mb-3 col-md-12">
+                        <input asp-for="Name" class="form-control" />
+                        <label asp-for="Name" class="ms-2 text-muted"></label>
+                        <span asp-validation-for="Name" class="text-danger" />
+                    </div>
+                    <div class="form-floating mb-3 col-md-12">
+                        <input asp-for="PhoneNumber" class="form-control" />
+                        <label asp-for="PhoneNumber" class="ms-2 text-muted"></label>
+                        <span asp-validation-for="PhoneNumber" class="text-danger" />
+                    </div>
+                    <div class="form-floating mb-3 col-md-12">
+                        <input asp-for="Password" class="form-control" />
+                        <label asp-for="Password" class="ms-2 text-muted"></label>
+                        <span asp-validation-for="Password" class="text-danger" />
+                    </div>
+                    <div class="form-floating mb-3 col-md-12">
+                        <input asp-for="ConfirmPassword" class="form-control" />
+                        <label asp-for="ConfirmPassword" class="ms-2 text-muted">Confirm Password</label>
+                        <span asp-validation-for="ConfirmPassword" class="text-danger" />
+                    </div>
+
+                    <div class="form-floating mb-3 col-md-12">
+                        <select asp-for="Role" asp-items="@Model.RoleList" name="country" aria-label="Select a Role" data-control="select2" data-placeholder="Select a Role..." class="form-select fw-bold">
+                            <option disabled selected>-Select Role-</option>
+                        </select>
+                    </div>
+                    <div class="d-grid mb-10">
+                        <button type="submit" id="kt_sign_up_submit" class="btn btn-primary">
+                            <!--begin::Indicator label-->
+                            <span class="indicator-label">Register</span>
+                            <!--end::Indicator label-->
+                            <!--begin::Indicator progress-->
+                            <span class="indicator-progress">
+                                Please wait...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                            </span>
+                            <!--end::Indicator progress-->
+                        </button>
+                    </div>
+                </form>
+                <div class="row" style="height:20px"></div>
+                <!--end::Input group=-->
+                <!--begin::Sign up-->
+                <div class="text-gray-500 text-center fw-semibold fs-6">
+                    Already a Member?
+                    <a asp-action="Register" asp-route-returnUrl="@Model.RedirectUrl" class="link-primary">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

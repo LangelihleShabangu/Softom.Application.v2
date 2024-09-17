@@ -1,0 +1,80 @@
+﻿@model List<Softom.Application.Models.Member>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700">
+<link rel="stylesheet" href="@Url.Content("~/Newassets/plugins/global/plugins.bundle.css")">
+<link rel="stylesheet" href="@Url.Content("~/Newassets/plugins/custom/datatables/datatables.bundle.css")">
+
+<script src="@Url.Content("https://code.jquery.com/jquery-3.3.1.js")"></script>
+<script src="@Url.Content("https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js")"></script>
+<script src="@Url.Content("~/Newassets/js/pages/components/datatables/data-sources/html.js")"></script>
+
+<link rel="stylesheet" href="@Url.Content("~/assets/css/ztyle.bundle.css")">
+
+<div class="card card-bordered">
+    <div class="card-header">
+        <h3 class="card-title">Member Details</h3>
+        <div class="card-toolbar">
+            <a asp-controller="Member" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Create Member
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="kt-portlet kt-portlet--mobile">
+            <div class="kt-portlet__body" style="border:thin">
+                <table id="example" class="table table-striped- table-bordered table-hover table-checkable" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Created Date</th>
+                            <th>Email Address</th>
+                            <th>Website</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td style="vertical-align: middle">@item.ContactInformation.Firstname</td>
+                                <td style="vertical-align: middle">@item.Createddate.ToString("dd MMMM yyyy")</td>
+                                <td style="vertical-align: middle">@item.ContactInformation.Surname</td>
+                                <td style="vertical-align: middle">@item.ContactInformation.CellNumber</td>
+                                <td style="vertical-align: middle">
+                                    <div class="flex-shrink-0">
+                                        <a href="@Url.Action("Upsert", "Member", new { MemberId = item.MemberId })" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                            <i class="fa fa-toggle-off fa-lg"></i>
+                                        </a>
+                                        <a href="@Url.Action("Details", "Member", new { MemberId = item.MemberId })" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                            <i class="fa fa-cog fa-lg"></i>
+                                        </a>
+                                        <a onclick="delete(@item.MemberId)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                            <i class="fa fa-trash fa-lg"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                "scrollX": true,
+                "scrollY": true
+            });
+        });
+    </script>
+}
+
+
+
+

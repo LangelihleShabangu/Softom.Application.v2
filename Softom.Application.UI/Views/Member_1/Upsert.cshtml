@@ -1,0 +1,176 @@
+﻿@model Softom.Application.Models.MV.MemberDetails
+
+<div class="card card-bordered">
+    <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+        <!--begin::Card title-->
+        <div class="card-title m-0">
+            <h3 class="fw-bold m-0">Member Details</h3>
+        </div>
+        <!--end::Card title-->
+    </div>
+    <div class="card-body border-top p-9">
+        <div class="row pt-0">
+
+            <div class="col-md-12">
+
+                <form method="post" class="row" enctype="multipart/form-data">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                    <input asp-for="ContactInformation.ContactInformationId" hidden />
+                    <input asp-for="Address.AddressId" hidden />
+                    <div class="fv-row mb-7">
+                        <!--begin::Label-->
+                        <label class="d-block fw-semibold fs-6 mb-5">Member Logo</label>
+                        <!--end::Label-->
+                        <!--begin::Image placeholder-->
+                        <style>
+                            .image-input-placeholder {
+                                background-image: url('assets/media/svg/files/blank-image.svg');
+                            }
+
+                            [data-bs-theme="dark"] .image-input-placeholder {
+                                background-image: url('assets/media/svg/files/blank-image-dark.svg');
+                            }</style>
+                        <!--end::Image placeholder-->
+                        <!--begin::Image input-->
+                        <div class="image-input image-input-outline image-input-placeholder" data-kt-image-input="true">
+                            <!--begin::Preview existing avatar-->
+                            @if (@Model.Member?.MemberId == 0)
+                            {
+                                <div class="image-input-wrapper w-125px h-125px" style="background-image: url(assets/media/avatars/300-6.jpg);"></div>
+                            }
+                            else
+                            {
+                                <div class="image-input-wrapper w-125px h-125px" style="background-image: url('@string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(Model.ContactInformation.Logo))');"></div>
+                            }
+
+                            <!--end::Preview existing avatar-->
+                            <!--begin::Label-->
+                            <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+                                <i class="ki-outline ki-pencil fs-7"></i>
+                                <!--begin::Inputs-->
+                                <input type="file" id="txtUploadImage" name="avatar" accept=".png, .jpg, .jpeg" />
+                                <input type="hidden" name="avatar_remove" />
+                                <!--end::Inputs-->
+                            </label>
+                            <!--end::Label-->
+                            <!--begin::Cancel-->
+                            <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+                                <i class="ki-outline ki-cross fs-2"></i>
+                            </span>
+                            <!--end::Cancel-->
+                            <!--begin::Remove-->
+                            <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+                                <i class="ki-outline ki-cross fs-2"></i>
+                            </span>
+                            <!--end::Remove-->
+                        </div>
+                        <!--end::Image input-->
+                        <!--begin::Hint-->
+                        <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+                        <!--end::Hint-->
+                    </div>
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                    <div class="form-floating mb-3 col-md-12">
+                        <select asp-for="Associations" asp-items="@Model.AssociationList" name="country" aria-label="Select a Role" data-control="select2" data-placeholder="Select a Role..." class="form-select fw-bold">
+                            <option disabled selected>-Select Role-</option>
+                        </select>
+                    </div>
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="ContactInformation.Firstname" class="form-control" autocomplete="username" aria-required="true" placeholder="" />
+                        <label asp-for="ContactInformation.Firstname" class="ms-2 text-muted">Firstname</label>
+                        <span asp-validation-for="ContactInformation.Firstname" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="ContactInformation.PhoneNumber" class="form-control" placeholder="" />
+                        <label asp-for="ContactInformation.PhoneNumber" class="ms-2 text-muted">Phone Number</label>
+                        <span asp-validation-for="ContactInformation.PhoneNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="ContactInformation.Surname" class="form-control" placeholder="Color" />
+                        <label asp-for="ContactInformation.Surname" class="ms-2 text-muted">Surname</label>
+                        <span asp-validation-for="ContactInformation.Surname" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="ContactInformation.CellNumber" class="form-control" aria-required="true" />
+                        <label asp-for="ContactInformation.CellNumber" class="ms-2 text-muted">Cell Number</label>
+                        <span asp-validation-for="ContactInformation.CellNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="ContactInformation.EmailAddress" class="form-control" aria-required="true" />
+                        <label asp-for="ContactInformation.EmailAddress" class="ms-2 text-muted">Email Address</label>
+                        <span asp-validation-for="ContactInformation.EmailAddress" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3 col-md-6">
+                        <input asp-for="ContactInformation.Notes" class="form-control" aria-required="true" />
+                        <label asp-for="ContactInformation.Notes" class="ms-2 text-muted">Notes</label>
+                        <span asp-validation-for="ContactInformation.Notes" class="text-danger"></span>
+                    </div>                      
+
+                    <div class="separator separator-dashed my-5"></div>
+                    <!--begin::Item-->
+                    <div class="d-flex flex-stack">
+                        <div class="d-flex">
+                            <img src="~/assets/media/svg/brand-logos/slack-icon.svg" class="w-30px me-6" alt="" />
+                            <div class="d-flex flex-column">
+                                <div class="fs-6 fw-semibold text-gray-500 fw-bold">Address Information</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Item-->
+                    <div class="separator separator-dashed my-5"></div>
+
+                    <!--begin::Item-->
+                    <div class="row pt-0">
+                        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                        <div class="form-floating mb-3 col-md-6">
+                            <input asp-for="Address.AddressLine1" class="form-control" autocomplete="username" aria-required="true" placeholder="" />
+                            <label asp-for="Address.AddressLine1" class="ms-2 text-muted">Address Line 1</label>
+                            <span asp-validation-for="Address.AddressLine1" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3 col-md-6">
+                            <input asp-for="Address.AddressLine2" class="form-control" autocomplete="username" aria-required="true" placeholder="" />
+                            <label asp-for="Address.AddressLine2" class="ms-2 text-muted">Address Line 2</label>
+                            <span asp-validation-for="Address.AddressLine2" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3 col-md-6">
+                            <input asp-for="Address.AddressLine3" class="form-control" aria-required="true" placeholder="" />
+                            <label asp-for="Address.AddressLine3" class="ms-2 text-muted">Address Area</label>
+                            <span asp-validation-for="Address.AddressLine3" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3 col-md-6">
+                            <input asp-for="Address.Code" class="form-control" aria-required="true" placeholder="" />
+                            <label asp-for="Address.Code" class="ms-2 text-muted">Address Code</label>
+                            <span asp-validation-for="Address.Code" class="text-danger"></span>
+                        </div>
+                    </div>
+                    
+                    <!--end::Item-->                    
+                    <div class="separator separator-dashed my-5"></div>
+
+                    <div class="card-footer d-flex justify-content-end py-6 px-9">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            $('#Input_Role').change(function () {
+                var selection = $('#Input_Role Option:Selected').text();
+                if (selection == 'Company') {
+                    $('#Input_CompanyId').show();
+                }
+                else {
+                    $('#Input_CompanyId').hide();
+                }
+            })
+        })
+    </script>
+}

@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <a class="btn btn-sm btn-flex btn-secondary px-3">
+        <i class="ki-duotone ki-plus-square fs-2">
+            <span class="path1"></span>
+            <span class="path2"></span>
+            <span class="path3"></span>
+        </i>Hello @UserManager.GetUserName(User)
+    </a>
+
+    <a class="btn btn-sm btn-flex btn-secondary px-3" asp-controller="Account" asp-action="Logout">
+        <i class="ki-duotone ki-plus-square fs-2">
+            <span class="path1"></span>
+            <span class="path2"></span>
+            <span class="path3"></span>
+        </i>Logout
+    </a>
+}
+else
+{
+    <a class="btn btn-sm btn-flex btn-secondary px-3" asp-controller="Account" asp-action="Register">        
+        <i class="ki-duotone ki-plus-square fs-2">
+            <span class="path1"></span>
+            <span class="path2"></span>
+            <span class="path3"></span>
+        </i>Register
+    </a>
+
+    <a class="btn btn-sm btn-flex btn-secondary px-3" asp-controller="Account" asp-action="Login">
+        <i class="ki-duotone ki-plus-square fs-2">
+            <span class="path1"></span>
+            <span class="path2"></span>
+            <span class="path3"></span>
+        </i>Login
+    </a>
+}

@@ -1,0 +1,244 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Langa Shabangu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" integrity="sha512-Z/def5z5u2aR89OuzYcxmDJ0Bnd5V1cKqBEbvLOiUNWdg9PQeXVvXLI90SE4QOHGlfLqUnDNVAYyZi8UwUTmWQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/WhiteLagoon.Web.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="~/css/spinner.css"/>
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+    <link href="~/bootstrap/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />    
+    <link href="~/bootstrap/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="~/bootstrap/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<!--begin::Body-->
+<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled">
+	<partial name="_Notification" />
+	<!--begin::Theme mode setup on page load-->
+	<script>var defaultThemeMode = "light"; var themeMode; if (document.documentElement) { if (document.documentElement.hasAttribute("data-bs-theme-mode")) { themeMode = document.documentElement.getAttribute("data-bs-theme-mode"); } else { if (localStorage.getItem("data-bs-theme") !== null) { themeMode = localStorage.getItem("data-bs-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-bs-theme", themeMode); }</script>
+	<!--end::Theme mode setup on page load-->
+	<!--begin::Main-->
+	<!--begin::Root-->
+	<div class="d-flex flex-column flex-root">
+		<!--begin::Page-->
+		<div class="page d-flex flex-column flex-column-fluid">
+			<!--begin::Header-->
+			<div id="kt_header" class="header" data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{default: '200px', lg: '300px'}">
+				<!--begin::Container-->
+				<div class="header-top-container container-xxl sabi d-flex flex-grow-1 flex-stack">
+					<!--begin::Header Logo-->
+					<div class="d-flex align-items-center me-5">
+						<!--begin::Heaeder menu toggle-->
+						<div class="d-lg-none btn btn-icon btn-color-white w-30px h-30px me-2 ms-n2" id="kt_header_menu_toggle">
+							<i class="ki-duotone ki-abstract-14 fs-2">
+								<span class="path1"></span>
+								<span class="path2"></span>
+							</i>
+						</div>	
+						<!--begin::Logo-->
+						<a href="index.html">
+							<!--begin::Desktop modes-->
+							<img alt="Logo" src="~/images/Langa_Assessment_2.png" class="d-none d-lg-inline-block h-90px" />
+							<!--begin::Table & mobile modes-->
+							<img alt="Logo" src="~/images/Langa_Assessment_2.png" class="d-lg-none h-95px" />
+							<!--end::Table & mobile modes-->
+						</a>
+						<!--end::Logo-->
+					</div>
+					<!--end::Header Logo-->		
+					
+				</div>
+				<!--end::Container-->
+				<!--begin::Container-->
+				<div class="header-menu-container d-flex align-items-stretch flex-stack w-100" id="kt_header_nav">
+					<!--begin::Menu wrapper-->
+					<div class="header-menu container-xxl flex-column align-items-stretch flex-lg-row" data-kt-drawer="true" data-kt-drawer-name="header-menu" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_header_menu_toggle" data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_body', lg: '#kt_header_nav'}">
+						<!--begin::Menu-->
+						<div class="menu menu-column menu-lg-row menu-rounded menu-active-bg menu-title-gray-800 menu-state-primary menu-arrow-gray-500 fw-semibold my-5 my-lg-0 align-items-stretch flex-grow-1 px-2 px-lg-0" id="kt_header_menu" data-kt-menu="true">
+							<!--begin:Menu item-->
+							<div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" class="menu-item here show menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
+								<!--begin:Menu link-->
+								<span class="menu-link py-3">
+									<span class="menu-title">SoftTom</span>
+									<span class="menu-arrow d-lg-none"></span>
+								</span>
+								<!--end:Menu link-->
+								<!--begin:Menu sub-->
+								<div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown p-0 w-100 w-lg-650px">
+									<!--begin:Dashboards menu-->
+									<div class="menu-state-bg menu-extended overflow-hidden overflow-lg-visible" data-kt-menu-dismiss="true">
+										<!--begin:Row-->
+										
+										<!--end:Row-->
+									</div>
+									<!--end:Dashboards menu-->
+								</div>
+								<!--end:Menu sub-->
+							</div>
+							<!--end:Menu item-->							
+						</div>
+						<!--end::Menu-->
+					</div>
+					<!--end::Menu wrapper-->
+				</div>
+				<!--end::Container-->
+			</div>
+			<!--end::Header-->
+			<!--begin::Wrapper-->
+			<div class="wrapper d-flex flex-column flex-row-fluid container-xxl" id="kt_wrapper">
+				<!--begin::Toolbar-->
+				<div class="toolbar d-flex flex-stack flex-wrap py-4 gap-2" id="kt_toolbar">
+					<!--begin::Page title-->
+					<div class="page-title d-flex flex-column">											  
+						<!--begin::Title-->
+						<h1 class="page-heading d-flex flex-column justify-content-center text-gray-900 fw-bolder fs-3 m-0">
+							<!--begin::Description-->
+							<span class="page-desc text-muted fs-7 fw-semibold"></span>
+							<!--end::Description-->
+						</h1>
+						<!--end::Title-->
+					</div>
+					<!--end::Page title-->
+					<!--begin::Wrapper-->
+					<div class="d-flex flex-align-items flex-wrap gap-3 gap-xl-0">
+						<!--begin::Users group-->
+						<div class="symbol-group symbol-hover flex-nowrap me-5"></div>
+						<!--end::Users group-->
+						<!--begin::Actions-->
+						<div class="d-flex align-items-center flex-shrink-0">
+
+							<div class="d-flex align-items-center flex-shrink-0">
+								<div class="p-2 border rounded">
+									<div class="form-check form-switch" id="btnSwitch">
+										<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+										<label class="form-check-label" for="flexSwitchCheckDefault">Mode</label>
+									</div>
+								</div>								
+								<partial name="_NewLoginPartial" />
+							</div>	
+
+						</div>
+						<!--end::Actions-->
+					</div>
+					<!--end::Wrapper-->
+				</div>
+				<!--end::Toolbar-->
+				<!--begin::Main-->
+				<div class="d-flex flex-row flex-column-fluid align-items-stretch">
+					<!--begin::Content-->
+					<div class="content flex-row-fluid" id="kt_content">
+						
+						<!--begin::Row-->
+						<div class="row gy-5 g-xl-8">
+							<!--begin::Col-->
+							<div class="col-xl-12">
+								<div class="loading spinner" style="display:none;"></div>
+								<partial name="_Notification" />
+								<!--begin::List Widget 3-->
+								@RenderBody()
+								<!--end:List Widget 3-->
+							</div>
+							<!--end::Col-->
+						</div>
+						<!--end::Row-->						
+					</div>
+					<!--end::Content-->
+				</div>
+				<!--end::Main-->
+				<!--begin::Footer-->
+				<div class="footer py-4 d-flex flex-column flex-md-row align-items-center justify-content-between" id="kt_footer">
+					<!--begin::Copyright-->
+					<div class="order-2 order-md-1">
+						<span class="text-white opacity-75 fw-semibold me-1">2024&copy;</span>
+						<a href="" target="_blank" class="text-white text-hover-primary opacity-75">SofTom</a>
+					</div>
+					<!--end::Copyright-->
+					<!--begin::Menu-->
+					<ul class="menu menu-white menu-hover-primary fw-semibold order-1 opacity-75">
+						<li class="menu-item">
+							<a href="" target="_blank" class="menu-link px-2">About</a>
+						</li>
+						<li class="menu-item">
+							<a href="" target="_blank" class="menu-link px-2">Support</a>
+						</li>						
+					</ul>
+					<!--end::Menu-->
+				</div>
+				<!--end::Footer-->
+			</div>
+			<!--end::Wrapper-->
+		</div>
+		<!--end::Page-->
+	</div>
+	<!--end::Root-->
+
+
+	<!--end::Drawers-->
+	<!--end::Main-->
+	<!--begin::Scrolltop-->
+	<div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+		<i class="ki-duotone ki-arrow-up">
+			<span class="path1"></span>
+			<span class="path2"></span>
+		</i>
+	</div>
+	<!--end::Scrolltop-->
+	<!--begin::Modals-->
+	
+
+	<!--end::Modal - Users Search-->
+	<!--end::Modals-->
+	<!--begin::Javascript-->
+	<script>var hostUrl = "~/bootstrap/assets/";</script>
+	<!--begin::Global Javascript Bundle(mandatory for all pages)-->
+	<script src="~/bootstrap/assets/plugins/global/plugins.bundle.js"></script>
+	<script src="~/bootstrap/assets/js/scripts.bundle.js"></script>
+	<!--end::Global Javascript Bundle-->
+	<!--begin::Vendors Javascript(used for this page only)-->
+
+
+	<script src="~/assets/plugins/global/plugins.bundle.js"></script>
+	<script src="~/assets/js/scripts.bundle.js"></script>
+	<!--end::Global Javascript Bundle-->
+	<!--begin::Vendors Javascript(used for this page only)-->
+
+	<script src="@Url.Content("~/assets/plugins/custom/datatables/Datatable/datatables.bundle.js")"></script>
+	<!--end::Vendors Javascript-->
+	<!--begin::Custom Javascript(used for this page only)-->
+	<script src="~/bootstrap/assets/js/widgets.bundle.js"></script>
+	<script src="~/bootstrap/assets/js/custom/widgets.js"></script>
+	
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://cdn.tiny.cloud/1/5g44yhy0b0cl04l78f5iuo9y6iwate3b7sy02wkbuiox6cok/tinymce/6/tinymce.min.js" referrerpolicy="origin">
+         <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>	
+
+	<script type="text/javascript">
+		document.getElementById('btnSwitch').addEventListener('click', () => {
+			if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
+				document.documentElement.setAttribute('data-bs-theme', 'light')
+			}
+			else {
+				document.documentElement.setAttribute('data-bs-theme', 'dark')
+			}
+		})
+	</script>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.bundle.min.js" integrity="sha512-sH8JPhKJUeA9PWk3eOcOl8U+lfZTgtBXD41q6cO/slwxGHCxKcW45K4oPCUhHG7NMB4mbKEddVmPuTXtpbCbFA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	<script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js" asp-append-version="true"></script>
+
+
+	@await RenderSectionAsync("Scripts", required: false)
+	<!--end::Custom Javascript-->
+	<!--end::Javascript-->
+</body>
+<!--end::Body-->
+
+</html>

@@ -1,0 +1,9 @@
+﻿@if(User.IsInRole(SD.Role_Admin))
+{
+    Layout = "_Layout";
+    @* Layout = "_LayoutGrids"; *@
+}
+else
+{
+    Layout = "_Layout_00";
+}

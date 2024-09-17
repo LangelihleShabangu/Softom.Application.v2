@@ -1,0 +1,71 @@
+﻿@model Softom.Application.Models.Vehicle
+
+<div class="card card-bordered">
+    <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+        <!--begin::Card title-->
+        <div class="card-title m-0">
+            <h3 class="fw-bold m-0">Vehicle Details</h3>
+        </div>
+        <!--end::Card title-->
+    </div>
+
+    <div class="card-body border-top p-9">
+        <div class="row pt-0">
+            <form method="post" class="row" enctype="multipart/form-data" action="Upsert">
+                <input asp-for="VehicleId" hidden />
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div class="form-floating mb-3 col-md-6">
+                    <input asp-for="Make" class="form-control" autocomplete="username" aria-required="true" placeholder="" />
+                    <label asp-for="Make" class="ms-2 text-muted">Make</label>
+                    <span asp-validation-for="Make" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3 col-md-6">
+                    <input asp-for="Model" class="form-control" placeholder="" />
+                    <label asp-for="Model" class="ms-2 text-muted">Model</label>
+                    <span asp-validation-for="Model" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3 col-md-6">
+                    <input asp-for="VinNumber" class="form-control" placeholder="Color" />
+                    <label asp-for="VinNumber" class="ms-2 text-muted">Vin Number</label>
+                    <span asp-validation-for="VinNumber" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3 col-md-6">
+                    <input asp-for="DiskExpiryDate" class="form-control" aria-required="true" />
+                    <label asp-for="DiskExpiryDate" class="ms-2 text-muted">Expiry Date</label>
+                    <span asp-validation-for="DiskExpiryDate" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3 col-md-6">
+                    <input asp-for="Notes" class="form-control" aria-required="true" />
+                    <label asp-for="Notes" class="ms-2 text-muted">Notes</label>
+                    <span asp-validation-for="Notes" class="text-danger"></span>
+                </div>
+
+                <!--end::Item-->
+                <div class="separator separator-dashed my-5"></div>
+
+                <div class="card-footer d-flex justify-content-end py-6 px-9">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            $('#Input_Role').change(function () {
+                var selection = $('#Input_Role Option:Selected').text();
+                if (selection == 'Company') {
+                    $('#Input_CompanyId').show();
+                }
+                else {
+                    $('#Input_CompanyId').hide();
+                }
+            })
+        })
+    </script>
+}
