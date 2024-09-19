@@ -17,6 +17,10 @@ namespace Softom.Application.BusinessRules.Common.Interfaces
 		IAssociationRepository Association { get; }
         IMemberRepository Member { get; }
         IContactInformationRepository ContactInformation { get; }
+        IPaymentStatusRepository PaymentStatus { get; }
+        IPaymentTypeRepository PaymentType { get; }
+        IPaymentRepository Payment { get; }
+        IStatusRepository Status { get; }
         void Save();
     }
 }

@@ -73,32 +73,32 @@
 
                     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                     <div class="form-floating mb-3 col-md-6">
-                        <input asp-for="Association.AssociationName" class="form-control" autocomplete="username" aria-required="true" placeholder="" />
+                        <input asp-for="Association.AssociationName" class="form-control" autocomplete="username" aria-required="true" placeholder="" required />
                         <label asp-for="Association.AssociationName" class="ms-2 text-muted">Association Name</label>
                         <span asp-validation-for="Association.AssociationName" class="text-danger"></span>
                     </div>
                     <div class="form-floating mb-3 col-md-6">
-                        <input asp-for="Association.PhoneNumber" class="form-control" placeholder="" />
+                        <input asp-for="Association.PhoneNumber" class="form-control" placeholder="" required />
                         <label asp-for="Association.PhoneNumber" class="ms-2 text-muted">Phone Number</label>
                         <span asp-validation-for="Association.PhoneNumber" class="text-danger"></span>
                     </div>
                     <div class="form-floating mb-3 col-md-6">
-                        <input asp-for="Association.Website" class="form-control" placeholder="" />
+                        <input asp-for="Association.Website" class="form-control" placeholder="" required />
                         <label asp-for="Association.Website" class="ms-2 text-muted">Website</label>
                         <span asp-validation-for="Association.Website" class="text-danger"></span>
                     </div>
                     <div class="form-floating mb-3 col-md-6">
-                        <input asp-for="Association.CellNumber" class="form-control" aria-required="true" placeholder="" />
+                        <input asp-for="Association.CellNumber" class="form-control" aria-required="true" placeholder="" required />
                         <label asp-for="Association.CellNumber" class="ms-2 text-muted">Cell Number</label>
                         <span asp-validation-for="Association.CellNumber" class="text-danger"></span>
                     </div>
                     <div class="form-floating mb-3 col-md-6">
-                        <input asp-for="Association.EmailAddress" class="form-control" aria-required="true" placeholder="" />
+                        <input asp-for="Association.EmailAddress" class="form-control" aria-required="true" placeholder="" required />
                         <label asp-for="Association.EmailAddress" class="ms-2 text-muted">Email Address</label>
                         <span asp-validation-for="Association.EmailAddress" class="text-danger"></span>
                     </div>
                     <div class="form-floating mb-3 col-md-6">
-                        <input asp-for="Association.Notes" class="form-control" aria-required="true" placeholder="" />
+                        <input asp-for="Association.Notes" class="form-control" aria-required="true" placeholder="" required />
                         <label asp-for="Association.Notes" class="ms-2 text-muted">Notes</label>
                         <span asp-validation-for="Association.Notes" class="text-danger"></span>
                     </div>                      
@@ -120,22 +120,22 @@
                     <div class="row pt-0">
                         <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                         <div class="form-floating mb-3 col-md-4">
-                            <input asp-for="Address.AddressLine1" class="form-control" autocomplete="username" aria-required="true" placeholder="" />
+                            <input asp-for="Address.AddressLine1" class="form-control" autocomplete="username" aria-required="true" placeholder="" required />
                             <label asp-for="Address.AddressLine1" class="ms-2 text-muted">Address Line 1</label>
                             <span asp-validation-for="Address.AddressLine1" class="text-danger"></span>
                         </div>
                         <div class="form-floating mb-3 col-md-4">
-                            <input asp-for="Address.AddressLine2" class="form-control" autocomplete="username" aria-required="true" placeholder="" />
+                            <input asp-for="Address.AddressLine2" class="form-control" autocomplete="username" aria-required="true" placeholder="" required />
                             <label asp-for="Address.AddressLine2" class="ms-2 text-muted">Address Line 2</label>
                             <span asp-validation-for="Address.AddressLine2" class="text-danger"></span>
                         </div>
                         <div class="form-floating mb-3 col-md-4">
-                            <input asp-for="Address.AddressLine3" class="form-control" aria-required="true" placeholder="" />
+                            <input asp-for="Address.AddressLine3" class="form-control" aria-required="true" placeholder="" required />
                             <label asp-for="Address.AddressLine3" class="ms-2 text-muted">Address Area</label>
                             <span asp-validation-for="Address.AddressLine3" class="text-danger"></span>
                         </div>
                         <div class="form-floating mb-3 col-md-12">
-                            <input asp-for="Address.Code" class="form-control" aria-required="true" placeholder="" />
+                            <input asp-for="Address.Code" class="form-control" aria-required="true" placeholder="" required />
                             <label asp-for="Address.Code" class="ms-2 text-muted">Address Code</label>
                             <span asp-validation-for="Address.Code" class="text-danger"></span>
                         </div>

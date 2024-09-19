@@ -9,6 +9,7 @@ namespace Softom.Application.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int StatusId { get; set; }
         public string? Name { get; set; }
+        public string? Description { get; set; }        
         public DateTime Createddate { get; set; } = DateTime.UtcNow;
         public DateTime Modifieddate { get; set; } = DateTime.UtcNow;
         public bool Isdeleted { get; set; }

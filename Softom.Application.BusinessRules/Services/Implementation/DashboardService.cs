@@ -32,7 +32,7 @@ namespace Softom.Application.BusinessRules.Services.Implementation
 
             PieChartDto PieChartDto = new()
             {
-                Labels = new string[] { "New Customer Bookings", "Returning Customer Bookings" },
+                Labels = new string[] { "New Customer Payments", "Returning Customer Payments" },
                 Series = new decimal[] { bookingsByNewCustomer, bookingsByReturningCustomer }
             };
 
@@ -137,14 +137,13 @@ namespace Softom.Application.BusinessRules.Services.Implementation
 
         public async Task<RadialBarChartDto> GetTotalBookingRadialChartData()
         {
-            var totalBookings = _unitOfWork.Booking.GetAll(u => u.Status != SD.StatusPending
-          || u.Status == SD.StatusCancelled);
+            var totalBookings = _unitOfWork.Member.GetAll();
 
-            var countByCurrentMonth = totalBookings.Count(u => u.BookingDate >= currentMonthStartDate &&
-            u.BookingDate <= DateTime.Now);
+            var countByCurrentMonth = totalBookings.Count(u => u.Createddate >= currentMonthStartDate &&
+            u.Createddate <= DateTime.Now);
 
-            var countByPreviousMonth = totalBookings.Count(u => u.BookingDate >= previousMonthStartDate &&
-            u.BookingDate <= currentMonthStartDate);
+            var countByPreviousMonth = totalBookings.Count(u => u.Createddate >= previousMonthStartDate &&
+            u.Createddate <= currentMonthStartDate);
 
             return SD.GetRadialCartDataModel(totalBookings.Count(), countByCurrentMonth, countByPreviousMonth);
         }        

@@ -45,13 +45,13 @@
                                 <td style="vertical-align: middle">@item.Website</td>
                                 <td style="vertical-align: middle">
                                     <div class="flex-shrink-0">
-                                        <a href="@Url.Action("Upsert", "Association", new { AssociationId = item.AssociationId })" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                        <a href="@Url.Action("Upsert", "Association", new { AssociationId = item.AssociationId })" class="btn btn-icon btn-active-color-primary btn-sm me-1">
                                             <i class="fa fa-toggle-off fa-lg"></i>
                                         </a>
-                                        <a href="@Url.Action("Details", "Association", new { AssociationId = item.AssociationId })" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                        <a href="@Url.Action("Details", "Association", new { AssociationId = item.AssociationId })" class="btn btn-icon btn-active-color-primary btn-sm me-1">
                                             <i class="fa fa-cog fa-lg"></i>
                                         </a>
-                                        <a onclick="delete(@item.AssociationId)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                        <a onclick="delete(@item.AssociationId)" class="btn btn-icon btn-active-color-primary btn-sm">
                                             <i class="fa fa-trash fa-lg"></i>
                                         </a>
                                     </div>

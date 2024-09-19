@@ -8,8 +8,8 @@ namespace Softom.Application.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PaymentId { get; set; }
-        [ForeignKey("Status")]
-        public int StatusId { get; set; }
+        [ForeignKey("PaymentStatus")]
+        public int PaymentStatusId { get; set; }
         [ForeignKey("Member")]
         public int MemberId { get; set; }
         [ForeignKey("PaymentType")]
@@ -20,8 +20,8 @@ namespace Softom.Application.Models
         public DateTime Createddate { get; set; } = DateTime.Now;
         public DateTime Modifieddate { get; set; } = DateTime.Now;
         public bool Isdeleted { get; set; }
-        public Status Status { get; set; }
-        public Member Member { get; set; }
-        public PaymentType PaymentType { get; set; }
+        public PaymentStatus? PaymentStatus { get; set; }
+        public Member? Member { get; set; }
+        public PaymentType? PaymentType { get; set; }
     }
 }

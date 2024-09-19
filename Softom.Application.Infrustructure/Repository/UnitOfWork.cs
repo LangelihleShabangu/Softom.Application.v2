@@ -21,6 +21,10 @@ namespace Softom.Application.Infrustructure.Repository
         public IMemberRepository Member { get; private set; }
         public IVillaNumberRepository VillaNumber { get; private set; }
         public IContactInformationRepository ContactInformation { get; private set; }
+        public IStatusRepository Status { get; private set; }
+        public IPaymentRepository Payment { get; private set; }
+        public IPaymentTypeRepository PaymentType { get; private set; }
+        public IPaymentStatusRepository PaymentStatus { get; private set; }
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
@@ -33,7 +37,11 @@ namespace Softom.Application.Infrustructure.Repository
             VillaNumber = new VillaNumberRepository(_db);
             Member = new MemberRepository(_db);
             Member = new MemberRepository(_db);
-            ContactInformation = new ContactInformationRepository(_db); 
+            ContactInformation = new ContactInformationRepository(_db);
+            Payment = new PaymentRepository(_db);
+            Status = new StatusRepository(_db);
+            PaymentType = new PaymentTypeRepository(_db);
+            PaymentStatus = new PaymentStatusRepository(_db);
         }
 
         public void Save()

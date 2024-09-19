@@ -25,7 +25,10 @@ namespace Softom.Application.Infrustructure.Data
 		public DbSet<Association> Association { get; set; }        
         public DbSet<ContactInformation> ContactInformation { get; set; }
         public DbSet<Member> Member { get; set; }
-
+        public DbSet<Status> Status { get; set; }        
+        public DbSet<Payment> Payment { get; set; }
+        public DbSet<PaymentType> PaymentType { get; set; }
+        public DbSet<PaymentStatus> PaymentStatus { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

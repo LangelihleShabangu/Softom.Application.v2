@@ -130,7 +130,7 @@
                         <div class="card card-page">
                             <!--begin::Card body-->
                             <div class="card-body">
-
+                                <partial name="_Notification" />
                                 @RenderBody()
                             </div>
                             <!--end::Card body-->
@@ -4361,6 +4361,7 @@
     <script src="@Url.Content("~/LatestAssets/js/custom/utilities/modals/new-target.js")"></script>
     <script src="@Url.Content("~/LatestAssets/js/custom/utilities/modals/users-search.js")"></script>
     <script src="@Url.Content("~/LatestAssets/js/custom/documentation/forms/daterangepicker.js")"></script>
+    <script src="@Url.Content("~/LatestAssets/js/pages/components/forms/widgets/select2.js")"></script>    
 
     @await RenderSectionAsync("Scripts", required: false)
 

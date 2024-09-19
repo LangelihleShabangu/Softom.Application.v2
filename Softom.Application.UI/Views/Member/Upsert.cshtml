@@ -16,6 +16,7 @@
                 <form method="post" class="row" enctype="multipart/form-data">
 
                     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                    <input asp-for="Member.MemberId" hidden />
                     <input asp-for="ContactInformation.ContactInformationId" hidden />
                     <input asp-for="Address.AddressId" hidden />
                     <div class="fv-row mb-7">
@@ -73,37 +74,37 @@
 
                     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                     <div class="form-floating mb-3 col-md-12">
-                        <select asp-for="Associations" asp-items="@Model.AssociationList" name="country" aria-label="Choose Association" data-control="select2" data-placeholder="Select an Association..." class="form-control search-select">
+                        <select asp-for="Associations" asp-items="@Model.AssociationList" name="country" aria-label="Choose Association" data-control="select2" data-placeholder="Select an Association..." class="form-control search-select" required>
                             <option selected>-Select Association-</option>
                         </select>
                     </div>
 
                     <div class="form-floating mb-3 col-md-6">
-                        <input asp-for="ContactInformation.Firstname" class="form-control" autocomplete="username" aria-required="true" placeholder="" />
+                        <input asp-for="ContactInformation.Firstname" class="form-control" autocomplete="username" aria-required="true" placeholder="" required />
                         <label asp-for="ContactInformation.Firstname" class="ms-2 text-muted">Firstname</label>
                         <span asp-validation-for="ContactInformation.Firstname" class="text-danger"></span>
                     </div>
 
                     <div class="form-floating mb-3 col-md-6">
-                        <input asp-for="ContactInformation.PhoneNumber" class="form-control" placeholder="" />
+                        <input asp-for="ContactInformation.PhoneNumber" class="form-control" placeholder="" required />
                         <label asp-for="ContactInformation.PhoneNumber" class="ms-2 text-muted">Phone Number</label>
                         
                     </div>
                     <div class="form-floating mb-3 col-md-6">
-                        <input asp-for="ContactInformation.Surname" class="form-control" placeholder="" />
+                        <input asp-for="ContactInformation.Surname" class="form-control" placeholder="" required />
                         <label asp-for="ContactInformation.Surname" class="ms-2 text-muted">Surname</label>
                     </div>
                     <div class="form-floating mb-3 col-md-6">
-                        <input asp-for="ContactInformation.CellNumber" class="form-control" placeholder="" />
+                        <input asp-for="ContactInformation.CellNumber" class="form-control" placeholder="" required />
                         <label asp-for="ContactInformation.CellNumber" class="ms-2 text-muted">Cell Number</label>
                     </div>
                     <div class="form-floating mb-3 col-md-6">
-                        <input asp-for="ContactInformation.EmailAddress" class="form-control" placeholder="" />
+                        <input asp-for="ContactInformation.EmailAddress" class="form-control" placeholder="" required />
                         <label asp-for="ContactInformation.EmailAddress" class="ms-2 text-muted">Email Address</label>
                         <span asp-validation-for="ContactInformation.EmailAddress" class="text-danger"></span>
                     </div>
                     <div class="form-floating mb-3 col-md-6">
-                        <input asp-for="ContactInformation.Notes" class="form-control" placeholder="" />
+                        <input asp-for="ContactInformation.Notes" class="form-control" placeholder="" required />
                         <label asp-for="ContactInformation.Notes" class="ms-2 text-muted">Identity Number</label>
                         <span asp-validation-for="ContactInformation.Notes" class="text-danger"></span>
                     </div>
@@ -126,22 +127,22 @@
                     <div class="row pt-0">
                         <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                         <div class="form-floating mb-3 col-md-4">
-                            <input asp-for="Address.AddressLine1" class="form-control" autocomplete="username" aria-required="true" placeholder="" />
+                            <input asp-for="Address.AddressLine1" class="form-control" autocomplete="username" aria-required="true" placeholder="" required />
                             <label asp-for="Address.AddressLine1" class="ms-2 text-muted">Address Line 1</label>
                             <span asp-validation-for="Address.AddressLine1" class="text-danger"></span>
                         </div>
                         <div class="form-floating mb-3 col-md-4">
-                            <input asp-for="Address.AddressLine2" class="form-control" autocomplete="username" aria-required="true" placeholder="" />
+                            <input asp-for="Address.AddressLine2" class="form-control" autocomplete="username" aria-required="true" placeholder="" required />
                             <label asp-for="Address.AddressLine2" class="ms-2 text-muted">Address Line 2</label>
                             <span asp-validation-for="Address.AddressLine2" class="text-danger"></span>
                         </div>
                         <div class="form-floating mb-3 col-md-4">
-                            <input asp-for="Address.AddressLine3" class="form-control" aria-required="true" placeholder="" />
+                            <input asp-for="Address.AddressLine3" class="form-control" aria-required="true" placeholder="" required />
                             <label asp-for="Address.AddressLine3" class="ms-2 text-muted">Address Area</label>
                             <span asp-validation-for="Address.AddressLine3" class="text-danger"></span>
                         </div>
                         <div class="form-floating mb-3 col-md-12">
-                            <input asp-for="Address.Code" class="form-control" aria-required="true" placeholder="" />
+                            <input asp-for="Address.Code" class="form-control" aria-required="true" placeholder="" required />
                             <label asp-for="Address.Code" class="ms-2 text-muted">Address Code</label>
                             <span asp-validation-for="Address.Code" class="text-danger"></span>
                         </div>

@@ -1,7 +1,11 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Softom.Application.BusinessRules.Common.Utility;
 using Softom.Application.BusinessRules.Services.Interface;
+using Softom.Application.Models.Entities;
 using Softom.Application.UI.ViewModels;
 using Syncfusion.Presentation;
+using WhiteLagoon.Web.Controllers;
 
 namespace Softom.Application.UI.Controllers
 {
@@ -9,14 +13,30 @@ namespace Softom.Application.UI.Controllers
     {
         private readonly IVillaService _villaService;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public HomeController(IVillaService villaService, IWebHostEnvironment webHostEnvironment)
+
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+      
+        public HomeController(IVillaService villaService, IWebHostEnvironment webHostEnvironment,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager,
+            SignInManager<ApplicationUser> signInManager)
         {
             _villaService = villaService;
             _webHostEnvironment = webHostEnvironment;
+            _roleManager = roleManager;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public IActionResult Index()
         {
+            if(User.IsInRole(SD.Role_Admin))
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
+
             HomeVM homeVM = new()
             {
                 VillaList = _villaService.GetAllVillas(),

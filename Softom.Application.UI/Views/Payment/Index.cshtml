@@ -1,0 +1,191 @@
+﻿@model Softom.Application.Models.MV.PaymentDetails
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700">
+<link rel="stylesheet" href="@Url.Content("~/Newassets/plugins/global/plugins.bundle.css")">
+<link rel="stylesheet" href="@Url.Content("~/Newassets/plugins/custom/datatables/datatables.bundle.css")">
+
+<script src="@Url.Content("https://code.jquery.com/jquery-3.3.1.js")"></script>
+<script src="@Url.Content("https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js")"></script>
+<script src="@Url.Content("~/Newassets/js/pages/components/datatables/data-sources/html.js")"></script>
+
+<link rel="stylesheet" href="@Url.Content("~/assets/css/ztyle.bundle.css")">
+
+<script src="@Url.Content("~/LatestAssets/js/pages/components/forms/widgets/select2.js")"></script>
+
+<div class="card card-bordered">
+    <div class="card-header">
+        <h3 class="card-title">Member Information Details</h3>
+        <div class="card-toolbar">
+            <a data-bs-toggle="modal" data-bs-target="#kt_modal_add_Payment" class="btn btn-primary btn-sm btn-hover-rise me-5 my-2">
+                <i class="bi bi-plus-circle"></i> Payment Details
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="kt-portlet kt-portlet--mobile">
+            <div class="kt-portlet__body" style="border:thin">
+                <table id="example" class="table table-striped- table-bordered table-hover table-checkable" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>Member</th>
+                            <th>Payment Date</th>
+                            <th>Payment Type</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in @Model.PaymentList)
+                        {
+                            <tr>
+                                <td style="vertical-align: middle">@item.Member.ContactInformation.Firstname @item.Member.ContactInformation.Surname</td>
+                                <td style="vertical-align: middle">@item.PaymentDate.ToString("dd MMMM yyyy")</td>
+                                <td style="vertical-align: middle">@item.PaymentType.Name</td>
+                                <td style="vertical-align: middle">@item.Amount</td>
+                                <td style="vertical-align: middle">
+                                    <div class="flex-shrink-0">
+                                        <a href="@Url.Action("Details", "Member", new { MemberId = item.MemberId })" class="btn btn-icon btn-active-color-primary btn-sm me-1">
+                                            <i class="fa fa-cog fa-lg"></i>
+                                        </a>
+                                        <a onclick="delete(@item.MemberId)" class="btn btn-icon btn-active-color-primary btn-sm">
+                                            <i class="fa fa-trash fa-lg"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="kt_modal_add_Payment" data-backdrop="false" tabindex="-1" aria-hidden="true">
+    <!--begin::Modal dialog-->
+    <div class="modal-dialog modal-dialog-centered mw-650px">
+        <!--begin::Modal content-->
+        <div class="modal-content">
+            <!--begin::Modal header-->
+            <div class="modal-header" id="kt_modal_add_Payment_header">
+                <!--begin::Modal title-->
+                <h4 class="fw-bolder">Edit Profile</h4>
+                <!--end::Modal title-->
+                <!--begin::Close-->
+                <div id="kt_modal_add_Payment_close" class="btn btn-icon btn-sm btn-active-icon-primary">
+                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                    <span class="svg-icon svg-icon-1" ">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" onclick="CloseScreen()">
+                            <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                            <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                        </svg>
+                    </span>
+                    <!--end::Svg Icon-->
+                </div>
+                <!--end::Close-->
+            </div>
+            <!--end::Modal header-->
+            <!--begin::Modal body-->
+            <form method="post" class="row" enctype="multipart/form-data" action="Payment">
+                <div class="modal-body py-10 px-lg-17">
+                    <!--begin::Scroll-->
+                    <div class="scroll-y me-n7 pe-7" id="kt_modal_add_Payment_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_Payment_header" data-kt-scroll-wrappers="#kt_modal_add_Payment_scroll" data-kt-scroll-offset="300px">
+
+                        <div class="form-group">
+                            <label asp-for="@Model.Member.MemberId" class="ms-2">Member</label>
+                            <select asp-for="@Model.Member.MemberId" asp-items="@Model.MemberList" aria-label="Select a Role" class="form-control kt-select2" id="kt_select2_1" data-placeholder="Select a Member..." name="param">
+                            </select>
+                            <span asp-validation-for="@Model.Member.MemberId" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="@Model.PaymentType.PaymentTypeId" class="ms-2">Payment Type</label>
+                            <select asp-for="@Model.PaymentType.PaymentTypeId" asp-items="@Model.PaymentTypeList" aria-label="Select a Role" class="form-control kt-select2" id="kt_select2" data-placeholder="Select a Member..." name="param">
+                            </select>
+                            <span asp-validation-for="@Model.PaymentType.PaymentTypeId" class="text-danger"></span>
+                        </div>
+
+                        <!--begin::Input group-->
+                        <div class="form-group row">
+                            <label for="example-text-input" class="ms-2">Amount</label>
+                            <div class="col-12">
+                                <input asp-for="Payment.Amount" class="form-control" aria-required="true" placeholder="" required id="Amount" />
+                            </div>
+                        </div>
+
+                        <!--end::Input group-->
+
+                    </div>
+                    <!--end::Scroll-->
+                </div>
+                <!--end::Modal body-->
+                <!--begin::Modal footer-->
+                <div class="modal-footer flex-center">
+                    <!--begin::Button-->
+                    <button type="button" id="kt_modal_add_Payment_cancel" class="btn btn-light me-3" data-dismiss="modal" onclick="CloseScreen()">Discard</button>
+                    <!--end::Button-->
+                    <!--begin::Button-->
+                    <button type="button" onclick="frmchangeSubmit()"
+                            class="btn btn-primary">
+                        <span class="indicator-label">Submit</span>
+                    </button>
+                    <button id="Button" type="submit" name="submit" formmethod="post" class="btn btn-secondary btn-sm">Save</button>
+                    <!--end::Button-->
+                </div>
+            </form>
+            <!--end::Modal footer-->
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                "scrollX": true,
+                "scrollY": true
+            });
+        });
+
+        function CloseScreen() {
+            $('#kt_modal_add_Payment').modal('hide')
+        }
+
+        function frmchangeSubmit() {
+            if ($("#kt_select2_1").val() == "") {
+                swal.fire("kt_select2_1", "Please choose Member", "error");
+                return;
+            }
+
+            if ($("#kt_select2").val() == "") {
+                swal.fire("PaymentType", "Please enter the Payment Type", "error");
+                return;
+            }
+            if ($("#Amount").val() == "") {
+                swal.fire("Amount", "Please enter the Amount", "error");
+                return;
+            }
+
+            $.ajax({
+                cache: false,
+                type: "POST",
+                data: {
+                    Member: $("#kt_select2_1").val(),
+                    PaymentType: $("#kt_select2").val(),
+                    Amount: $("#Amount").val()
+                },
+                url: '@Url.Action("CreatePayment", "Payment")',
+                success: function (data) {
+                    swal.fire("Payment", "Successfully Paid", "success");
+                    CloseScreen();
+                    window.location.href = '@Url.Action("Index", "Payment")';
+                }
+            });
+        }
+    </script>
+}
+
+
+
+

@@ -42,13 +42,13 @@
                                 <td style="vertical-align: middle">@item.ContactInformation.CellNumber</td>
                                 <td style="vertical-align: middle">
                                     <div class="flex-shrink-0">
-                                        <a href="@Url.Action("Upsert", "Member", new { MemberId = item.MemberId })" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                        <a href="@Url.Action("Upsert", "Member", new { MemberId = item.MemberId })" class="btn btn-icon btn-active-color-primary btn-sm me-1">
                                             <i class="fa fa-toggle-off fa-lg"></i>
                                         </a>
-                                        <a href="@Url.Action("Details", "Member", new { MemberId = item.MemberId })" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                        <a href="@Url.Action("Details", "Member", new { MemberId = item.MemberId })" class="btn btn-icon btn-active-color-primary btn-sm me-1">
                                             <i class="fa fa-cog fa-lg"></i>
                                         </a>
-                                        <a onclick="delete(@item.MemberId)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                        <a onclick="delete(@item.MemberId)" class="btn btn-icon btn-active-color-primary btn-sm">
                                             <i class="fa fa-trash fa-lg"></i>
                                         </a>
                                     </div>
