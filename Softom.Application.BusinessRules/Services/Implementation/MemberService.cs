@@ -47,12 +47,12 @@ namespace Softom.Application.BusinessRules.Services.Implementation
 
         public IEnumerable<Member> GetAllMember()
         {
-            return _unitOfWork.Member.GetAll(includeProperties: "Address,ContactInformation");
+            return _unitOfWork.Member.GetAll(includeProperties: "Address,ContactInformation,Association");
         }
 
         public Member GetMemberById(int id)
         {
-            return _unitOfWork.Member.Get(u => u.MemberId == id, includeProperties: "Address,ContactInformation");            
+            return _unitOfWork.Member.Get(u => u.MemberId == id, includeProperties: "Address,ContactInformation,Association");            
         }
 
         public void UpdateMember(Member Member)

@@ -1,42 +1,64 @@
 ﻿@model HomeVM
 
-<div>
-    <div id="carouselExampleIndicators" class="carousel slide">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+<div class="card">
+    <!--begin::Body-->
+    <div class="card-body p-lg-17">
+        <!--begin::Wrapper-->
+        <div class="mb-10">
+            <!--begin::Top-->
+            <div class="text-center mb-15">
+                <!--begin::Title-->
+                <h3 class="fs-2hx text-gray-900 mb-5">About SoftTom</h3>
+                <!--end::Title-->
+                <!--begin::Text-->
+                <div class="fs-5 text-muted fw-semibold">
+                    Within the last 10 years, we have stored more than a million amount of data for the Associations and we were able to deploy
+                    <br />successfully into the cloud to manage better security as part of proper client management of data.
+                </div>
+                <!--end::Text-->
+            </div>
+            <!--end::Top-->
+            <!--begin::Overlay-->
+            <div class="overlay">
+                <!--begin::Image-->
+                <img class="w-100 card-rounded" src="~/images/ImageTwo.png" />
+
+                <img class="w-100 card-rounded" src="~/images/Heritage2020.png" alt="" />
+                <!--end::Image-->
+               
+            </div>
+            <!--end::Container-->
         </div>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="~/images/slide2.jpg" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="~/images/slide1.jpg" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="~/images/slide1.jpg" class="d-block w-100" alt="...">
-            </div>
+        <!--end::Wrapper-->
+        <!--begin::Description-->
+        <div class="fs-5 fw-semibold text-gray-600">
+            <!--begin::Text-->
+            <p class="mb-8">
+                Drive innovation through the adoption of new technologies and modernisation strategies to improve service delivery and operational efficiencies, setting a strategic direction for the taxi industry's future sustainability and growth.
+                
+            </p>
+            <!--end::Text-->
+            <!--begin::Text-->
+            <p class="mb-8">
+                We believe in making things better,
+                <span class="text-gray-800 pe-1">“Our aim and vision.”</span> Empowered South African taxi industry, driving economic resilience and inclusivity. Their goal is a thriving future where all affiliated associations benefit from a sustainable and socially responsible taxi sector.
+            </p>
+            <!--end::Text-->
+            <!--begin::Text-->
+            <p class="mb-8">
+                Engages dynamically and proactively to create a thriving environment for its members, fostering unity and progress, and empowering the future of transportation in South Africa.
+            </p>
+            <!--end::Text-->           
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+        <!--end::Description-->
     </div>
-    <!--begin::Calendar Widget 1-->
-    <div class="card">
-        <!--begin::Card body-->
-        <div class="card-body">
-            <!--begin::Calendar-->
-            <div id="kt_calendar_widget_1"></div>
-            <!--end::Calendar-->
-        </div>
-        <!--end::Card body-->
+    <div class="card-body">
+        <!--begin::Calendar-->
+        <div id="kt_calendar_widget_1"></div>
+        <!--end::Calendar-->
     </div>
+</div>
+
     <!--end::Calendar Widget 1-->
     <form method="post"
           asp-action="GetVillasByDate">
@@ -73,32 +95,32 @@
         </div> *@
         @* <partial name="_VillaList" model="Model" /> *@
     </form>
-    <div id="carouselExampleIndicators1" class="carousel slide">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators1" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators1" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators1" data-bs-slide-to="2" aria-label="Slide 3"></button>
-        </div>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="~/images/slide1.jpg" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="~/images/slide1.jpg" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item">
-                <img src="~/images/slide1.jpg" class="d-block w-100" alt="...">
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators1" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators1" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+    @*     <div id="carouselExampleIndicators1" class="carousel slide">
+    <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators1" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators1" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators1" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
+    <div class="carousel-inner">
+    <div class="carousel-item active">
+    <img src="~/images/slide1.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+    <img src="~/images/slide1.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+    <img src="~/images/slide1.jpg" class="d-block w-100" alt="...">
+    </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators1" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators1" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+    </button>
+    </div> *@
 </div>
 
 @section scripts {

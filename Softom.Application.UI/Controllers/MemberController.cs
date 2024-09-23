@@ -121,7 +121,7 @@ namespace Softom.Application.UI.Controllers
             {
                 ContactInformationId = MemberMV.ContactInformation.ContactInformationId,
                 AddressId = MemberMV.Address.AddressId,
-                AssociationId = MemberMV.Association.AssociationId,
+                AssociationId = MemberMV.Member.AssociationId,
                 MemberImage = MemberMV.Member.MemberImage,
                 Createddate = System.DateTime.Now,
                 Modifieddate = System.DateTime.Now,

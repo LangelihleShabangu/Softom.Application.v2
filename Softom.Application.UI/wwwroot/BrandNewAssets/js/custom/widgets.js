@@ -647,7 +647,7 @@ var KTWidgets = function() {
                     className: "fc-event-primary"
                 },
                 {
-                    title: 'ICT Expo 2017 - Product Release',
+					title: 'One One One ICT Expo 2017 - Product Release',
                     start: YM + '-03',
                     description: 'Lorem ipsum dolor sit tempor inci',
                     end: YM + '-05',

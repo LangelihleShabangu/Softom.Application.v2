@@ -74,7 +74,7 @@
 
                     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                     <div class="form-floating mb-3 col-md-12">
-                        <select asp-for="Associations" asp-items="@Model.AssociationList" name="country" aria-label="Choose Association" data-control="select2" data-placeholder="Select an Association..." class="form-control search-select" required>
+                        <select asp-for="@Model.Member.AssociationId" asp-items="@Model.AssociationList" class="form-control search-select">
                             <option selected>-Select Association-</option>
                         </select>
                     </div>

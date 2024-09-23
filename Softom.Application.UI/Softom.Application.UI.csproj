@@ -8,10 +8,6 @@
 
   <ItemGroup>
     <Content Remove="Views\Member\Edit.cshtml" />
-    <Content Remove="Views\Member_1\Details.cshtml" />
-    <Content Remove="Views\Member_1\Edit.cshtml" />
-    <Content Remove="Views\Member_1\Index.cshtml" />
-    <Content Remove="Views\Member_1\Upsert.cshtml" />
     <Content Remove="Views\Association\Details.cshtml" />
     <Content Remove="Views\Shared\_Layout_22.cshtml" />
   </ItemGroup>
@@ -34,10 +30,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Member\Edit.cshtml" />
-    <None Include="Views\Member_1\Details.cshtml" />
-    <None Include="Views\Member_1\Edit.cshtml" />
-    <None Include="Views\Member_1\Index.cshtml" />
-    <None Include="Views\Member_1\Upsert.cshtml" />
     <None Include="Views\Association\Edit.cshtml" />
     <None Include="Views\Association\Details.cshtml" />
     <None Include="Views\Association\Index.cshtml" />
@@ -6171,6 +6163,11 @@
     <ProjectReference Include="..\Softom.Application.BusinessRules\Softom.Application.BusinessRules.csproj" />
     <ProjectReference Include="..\Softom.Application.Infrustructure\Softom.Application.Infrustructure.csproj" />
     <ProjectReference Include="..\Softom.Application.Models\Softom.Application.Models.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="itextsharp">
+      <HintPath>..\Softom.Application.BusinessRules\Generate_PDF\Libs\itextsharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Update="Views\Shared\_Layout - Copy.cshtml">

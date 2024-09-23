@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Softom.Application.BusinessRules.Services.Implementation;
@@ -17,11 +19,13 @@ namespace Softom.Application.UI.Controllers
         private readonly IPaymentServices _PaymentService;
         private readonly IMemberService _MemberService;
         private readonly IPaymentTypeService _PaymentTypeService;
-        public PaymentController(IPaymentServices PaymentService, IMemberService memberService, IPaymentTypeService PaymentTypeService)
+        private readonly IAssociationService _AssociationService;
+        public PaymentController(IPaymentServices PaymentService, IMemberService memberService, IPaymentTypeService PaymentTypeService, IAssociationService AssociationService)
         {
             _PaymentService = PaymentService;
             _MemberService = memberService;
             _PaymentTypeService = PaymentTypeService;
+            _AssociationService = AssociationService;
         }
 
         public IActionResult Index()
@@ -58,7 +62,19 @@ namespace Softom.Application.UI.Controllers
         {
             return View();
         }
-       
+
+        [HttpGet]
+        [Route("/Payment/GetInvoiceDetails/{PaymentId}")]
+        public IActionResult GetInvoiceDetails(int PaymentId)
+        {
+            var invoiceVM = new InvoiceVM();
+            invoiceVM.Payment = _PaymentService.GetPaymentById(PaymentId);
+            invoiceVM.Member = _MemberService.GetMemberById(invoiceVM.Payment.MemberId);
+            invoiceVM.Association = _AssociationService.GetAssociationById(invoiceVM.Member.Association.AssociationId);
+            var byteInfoStatement = new Softom.Application.BusinessRules.Generate_PDF.CreateInvoicePDF().GeneratePDFFile(invoiceVM).ToArray();
+            return File(byteInfoStatement, "APPLICATION/pdf", "Payment_" + System.DateTime.Now.ToString("dd MMMM yyyy") + "_" + invoiceVM.Member.ContactInformation.Firstname + "_" + invoiceVM.Member.ContactInformation.Surname + ".pdf");
+        }             
+
         [HttpPost]
         public IActionResult CreatePayment(int Member, int PaymentType, decimal Amount)
         {
@@ -76,7 +92,12 @@ namespace Softom.Application.UI.Controllers
             {
                 _PaymentService.CreatePayment(payment);
                 TempData["success"] = "The Payment has been created successfully.";
-                return RedirectToAction(nameof(Index));
+                var invoiceVM = new InvoiceVM();
+                invoiceVM.Payment = _PaymentService.GetPaymentById(payment.PaymentId);
+                invoiceVM.Member = _MemberService.GetMemberById(invoiceVM.Payment.MemberId);
+                invoiceVM.Association = _AssociationService.GetAssociationById(invoiceVM.Member.Association.AssociationId);
+                var byteInfoStatement = new Softom.Application.BusinessRules.Generate_PDF.CreateInvoicePDF().GeneratePDFFile(invoiceVM).ToArray();
+                return File(byteInfoStatement, "APPLICATION/pdf", "Payment_" + System.DateTime.Now.ToString("dd MMMM yyyy") + "_" + invoiceVM.Member.ContactInformation.Firstname + "_" + invoiceVM.Member.ContactInformation.Surname + ".pdf");
             }
 
             return Json(new { success = true });

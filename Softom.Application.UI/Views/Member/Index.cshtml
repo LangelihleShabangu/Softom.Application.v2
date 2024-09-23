@@ -8,7 +8,7 @@
 <script src="@Url.Content("https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js")"></script>
 <script src="@Url.Content("~/Newassets/js/pages/components/datatables/data-sources/html.js")"></script>
 
-<link rel="stylesheet" href="@Url.Content("~/assets/css/ztyle.bundle.css")">
+<link rel="stylesheet" href="@Url.Content("~/assets/css/ztyle.bundle.css")" />
 
 <div class="card card-bordered">
     <div class="card-header">
@@ -25,10 +25,11 @@
                 <table id="example" class="table table-striped- table-bordered table-hover table-checkable" style="width: 100%">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                            <th>Member</th>
+                            <th>Surname</th>
                             <th>Created Date</th>
-                            <th>Email Address</th>
-                            <th>Website</th>
+                            <th>CellPhone</th>
+                            <th>PhoneNumber</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -37,9 +38,10 @@
                         {
                             <tr>
                                 <td style="vertical-align: middle">@item.ContactInformation.Firstname</td>
-                                <td style="vertical-align: middle">@item.Createddate.ToString("dd MMMM yyyy")</td>
                                 <td style="vertical-align: middle">@item.ContactInformation.Surname</td>
+                                <td style="vertical-align: middle">@item.Createddate.ToString("dd MMMM yyyy")</td>                                
                                 <td style="vertical-align: middle">@item.ContactInformation.CellNumber</td>
+                                <td style="vertical-align: middle">@item.ContactInformation.PhoneNumber</td>
                                 <td style="vertical-align: middle">
                                     <div class="flex-shrink-0">
                                         <a href="@Url.Action("Upsert", "Member", new { MemberId = item.MemberId })" class="btn btn-icon btn-active-color-primary btn-sm me-1">

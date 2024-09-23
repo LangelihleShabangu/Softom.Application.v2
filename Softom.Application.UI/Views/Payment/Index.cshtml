@@ -8,7 +8,7 @@
 <script src="@Url.Content("https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js")"></script>
 <script src="@Url.Content("~/Newassets/js/pages/components/datatables/data-sources/html.js")"></script>
 
-<link rel="stylesheet" href="@Url.Content("~/assets/css/ztyle.bundle.css")">
+<link rel="stylesheet" href="@Url.Content("~/assets/css/ztyle.bundle.css")" />
 
 <script src="@Url.Content("~/LatestAssets/js/pages/components/forms/widgets/select2.js")"></script>
 
@@ -43,8 +43,8 @@
                                 <td style="vertical-align: middle">@item.PaymentType.Name</td>
                                 <td style="vertical-align: middle">@item.Amount</td>
                                 <td style="vertical-align: middle">
-                                    <div class="flex-shrink-0">
-                                        <a href="@Url.Action("Details", "Member", new { MemberId = item.MemberId })" class="btn btn-icon btn-active-color-primary btn-sm me-1">
+                                    <div class="flex-shrink-0">                                       
+                                        <a asp-controller="Payment" asp-action="GetInvoiceDetails" asp-route-id="@item.PaymentId" class="btn btn-icon btn-active-color-primary btn-sm me-1">
                                             <i class="fa fa-cog fa-lg"></i>
                                         </a>
                                         <a onclick="delete(@item.MemberId)" class="btn btn-icon btn-active-color-primary btn-sm">

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Softom.Application.BusinessRules.Common.Utility;
@@ -47,6 +48,7 @@ namespace Softom.Application.UI.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Register(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
@@ -143,7 +145,8 @@ namespace Softom.Application.UI.Controllers
                     {
                         if (string.IsNullOrEmpty(loginVM.RedirectUrl))
                         {
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Index", "Dashboard");
+                            //return RedirectToAction("Index", "Home"); Langa
                         }
                         else
                         {

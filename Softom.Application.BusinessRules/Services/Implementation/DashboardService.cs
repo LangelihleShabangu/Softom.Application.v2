@@ -85,7 +85,7 @@ namespace Softom.Application.BusinessRules.Services.Implementation
             {
                 new ChartData
                 {
-                    Name = "New Bookings",
+                    Name = "New Payments",
                     Data = newBookingData
                 },
                 new ChartData
