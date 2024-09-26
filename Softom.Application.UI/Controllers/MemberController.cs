@@ -10,6 +10,7 @@ using Softom.Application.Models.Entities;
 using Softom.Application.Models.MV;
 using Softom.Application.UI.ViewModels;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Claims;
 
 namespace Softom.Application.UI.Controllers
 {
@@ -21,19 +22,71 @@ namespace Softom.Application.UI.Controllers
         private readonly IAssociationService _AssociationService;
         private readonly IContactInformationService _ContactInformationService;
 
+        private readonly IPaymentServices _PaymentService;        
+        private readonly IPaymentTypeService _PaymentTypeService;
+        private readonly UserManager<ApplicationUser> _userManager;
         public MemberController(IMemberService MemberService, IAddressService AddressService, IContactInformationService ContactInformationService,
-            IAssociationService AssociationService)
+            IAssociationService AssociationService, IPaymentTypeService PaymentTypeService, UserManager<ApplicationUser> userManager, IPaymentServices PaymentService)
         {
             _AddressService = AddressService;
             _MemberService = MemberService;
             _AssociationService = AssociationService;
             _ContactInformationService = ContactInformationService;
+            _PaymentTypeService = PaymentTypeService;
+            _userManager = userManager;
+            _PaymentService = PaymentService;
         }
 
         public IActionResult Index()
         {
-            var Members = _MemberService.GetAllMember();
-            return View(Members);
+            MemberVM memberVM = new MemberVM();
+            memberVM.MemberList = _MemberService.GetAllMember();
+
+            PaymentDetails paymentDetailsVM = new()
+            {
+                PaymentTypeList = _PaymentTypeService.GetAllPaymentType().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.PaymentTypeId.ToString()
+                })
+            };
+            memberVM.paymentDetailsVM = paymentDetailsVM;
+            return View(memberVM);
+        }
+
+        [HttpPost]
+        public IActionResult CreatePayments(Softom.Application.UI.ViewModels.MemberVM memberVM)
+        {
+
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            ApplicationUser user = _userManager.FindByIdAsync(userId).GetAwaiter().GetResult();
+
+            var payment = new Payment();
+            payment.PaymentStatusId = 1; /* Active */
+            payment.MemberId = memberVM.MemberId;
+            payment.PaymentTypeId = memberVM.PaymentTypeId;
+            payment.Amount = memberVM.Payment.Amount;
+            payment.Notes = userId.ToString();
+            payment.Createddate = DateTime.Now;
+            payment.PaymentDate = DateTime.Now;
+            payment.Modifieddate = DateTime.Now;
+
+            if (ModelState.IsValid)
+            {
+                _PaymentService.CreatePayment(payment);
+                TempData["success"] = "The Payment has been created successfully.";
+                var invoiceVM = new InvoiceVM();
+                invoiceVM.Payment = _PaymentService.GetPaymentById(payment.PaymentId);
+                invoiceVM.Member = _MemberService.GetMemberById(invoiceVM.Payment.MemberId);
+
+                invoiceVM.Association = _AssociationService.GetAssociationById(invoiceVM.Member.AssociationId.Value);
+                var byteInfoStatement = new Softom.Application.BusinessRules.Generate_PDF.CreateInvoicePDF().GeneratePDFFile(invoiceVM).ToArray();
+                File(byteInfoStatement, "APPLICATION/pdf", "Payment_" + System.DateTime.Now.ToString("dd MMMM yyyy") + "_" + invoiceVM.Member.ContactInformation.Firstname + "_" + invoiceVM.Member.ContactInformation.Surname + ".pdf");
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Create()
@@ -55,7 +108,7 @@ namespace Softom.Application.UI.Controllers
         {
             return View("Detail", new Application.Models.MV.MemberDetails());
         }
-        
+
         [HttpGet]
         public IActionResult Upsert(int MemberId)
         {
@@ -96,33 +149,31 @@ namespace Softom.Application.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Softom.Application.Models.MV.MemberDetails MemberMV, List<IFormFile> files)
         {
-            var array = new Byte[64];
-            Array.Clear(array, 0, array.Length);
+            MemberMV.Member.AssociationId = _AssociationService.GetAllAssociation().FirstOrDefault().AssociationId;
 
-            var filePath = Path.GetTempFileName();
-            foreach (var formFile in Request.Form.Files)
-            {
-                if (formFile.Length > 0)
-                {
-                    using (var inputStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        formFile.CopyToAsync(inputStream);
-                        array = new byte[inputStream.Length];
-                        inputStream.Seek(0, SeekOrigin.Begin);
-                        inputStream.Read(array, 0, array.Length);
-                        MemberMV.Member.MemberImage = array;
-                    }
-                }
-            }
+            //if (MemberMV.Member == null || MemberMV.Member.AssociationId == null || MemberMV.Member.AssociationId == 0)
+            //{
+            //    ModelState.AddModelError("Associations", "Please select the Association.");
+            //    var memberdetails = new Application.Models.MV.MemberDetails();
+            //    memberdetails.Member = new Member();
+            //    memberdetails.ContactInformation = new ContactInformation();
+            //    memberdetails.Address = new Address();
+            //    memberdetails.Association = new Association();
+            //    memberdetails.AssociationList = _AssociationService.GetAllAssociation().Select(x => new SelectListItem
+            //    {
+            //        Text = x.AssociationName,
+            //        Value = x.AssociationId.ToString()
+            //    });
+            //    return View("Upsert", memberdetails);
+            //}
+
             MemberMV.ContactInformation.Notes = "None";
             _ContactInformationService.CreateContactInformation(MemberMV.ContactInformation);
-
             Member Member = new Member()
             {
                 ContactInformationId = MemberMV.ContactInformation.ContactInformationId,
                 AddressId = MemberMV.Address.AddressId,
                 AssociationId = MemberMV.Member.AssociationId,
-                MemberImage = MemberMV.Member.MemberImage,
                 Createddate = System.DateTime.Now,
                 Modifieddate = System.DateTime.Now,
                 Isdeleted = false,
@@ -150,31 +201,12 @@ namespace Softom.Application.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> Upsert(Softom.Application.Models.MV.MemberDetails MemberMV, List<IFormFile> files)
         {
-            var array = new Byte[64];
-            Array.Clear(array, 0, array.Length);
-
-            var filePath = Path.GetTempFileName();
-            foreach (var formFile in Request.Form.Files)
-            {
-                if (formFile.Length > 0)
-                {
-                    using (var inputStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        formFile.CopyToAsync(inputStream);
-                        array = new byte[inputStream.Length];
-                        inputStream.Seek(0, SeekOrigin.Begin);
-                        inputStream.Read(array, 0, array.Length);
-                        MemberMV.Member.MemberImage = array;
-                    }
-                }
-            }
-
             _ContactInformationService.UpdateContactInformation(MemberMV.ContactInformation);
             try
             {
                 _AddressService.UpdateAddress(MemberMV.Address);
             }
-            catch 
+            catch
             { TempData["success"] = "Member updated successfully"; }
 
             TempData["success"] = "Member updated successfully";

@@ -130,7 +130,7 @@ namespace Softom.Application.UI.Controllers
         {
             var array = new Byte[64];
             Array.Clear(array, 0, array.Length);
-
+            bool flag = false;
             var filePath = Path.GetTempFileName();
             foreach (var formFile in Request.Form.Files)
             {
@@ -143,8 +143,15 @@ namespace Softom.Application.UI.Controllers
                         inputStream.Seek(0, SeekOrigin.Begin);
                         inputStream.Read(array, 0, array.Length);
                         associationMV.Association.Logo = array;
+                        flag = true;
                     }
                 }
+            }
+
+            if (!flag && associationMV.Association.AssociationId > 0)
+            {
+                var obj = _AssociationService.GetAssociationById(associationMV.Association.AssociationId);
+                associationMV.Association.Logo = obj.Logo;
             }
 
             Association association = new Association()

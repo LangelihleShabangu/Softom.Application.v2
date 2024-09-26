@@ -25,32 +25,42 @@
 
                 <img class="w-100 card-rounded" src="~/images/Heritage2020.png" alt="" />
                 <!--end::Image-->
-               
+
             </div>
             <!--end::Container-->
         </div>
         <!--end::Wrapper-->
         <!--begin::Description-->
+
         <div class="fs-5 fw-semibold text-gray-600">
-            <!--begin::Text-->
-            <p class="mb-8">
-                Drive innovation through the adoption of new technologies and modernisation strategies to improve service delivery and operational efficiencies, setting a strategic direction for the taxi industry's future sustainability and growth.
-                
-            </p>
-            <!--end::Text-->
-            <!--begin::Text-->
-            <p class="mb-8">
-                We believe in making things better,
-                <span class="text-gray-800 pe-1">“Our aim and vision.”</span> Empowered South African taxi industry, driving economic resilience and inclusivity. Their goal is a thriving future where all affiliated associations benefit from a sustainable and socially responsible taxi sector.
-            </p>
-            <!--end::Text-->
-            <!--begin::Text-->
-            <p class="mb-8">
-                Engages dynamically and proactively to create a thriving environment for its members, fostering unity and progress, and empowering the future of transportation in South Africa.
-            </p>
-            <!--end::Text-->           
+            <div class="row">
+                <div class="col-xl-12">
+                    <!--begin::Portlet-->
+                    <div class="kt-portlet">
+                        <div class="kt-portlet__body">
+                            <!--begin::Accordion-->
+                            <div class="accordion accordion-outline accordion-outline--padded" id="accordionExample">
+                                <div class="card">                                    
+                                    <div id="collapseOne" class="card-body-wrapper collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            <p style="text-align:justify">Drive innovation through the adoption of new technologies and modernisation strategies to improve service delivery and operational efficiencies, setting a strategic direction for the taxi industry's future sustainability and growth.</p>
+                                            <p style="text-align:justify">
+                                                We believe in making things better,
+                                                <span class="text-gray-800 pe-1">“Our aim and vision.”</span> Empowered South African taxi industry, driving economic resilience and inclusivity. Their goal is a thriving future where all affiliated associations benefit from a sustainable and socially responsible taxi sector.
+                                            </p>
+                                            <p style="text-align:justify">
+                                                Engages dynamically and proactively to create a thriving environment for its members, fostering unity and progress, and empowering the future of transportation in South Africa.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!--end::Description-->
+
     </div>
     <div class="card-body">
         <!--begin::Calendar-->
@@ -59,69 +69,69 @@
     </div>
 </div>
 
-    <!--end::Calendar Widget 1-->
-    <form method="post"
-          asp-action="GetVillasByDate">
-        @*         <div class="row p-0 mx-0 py-4">
+<!--end::Calendar Widget 1-->
+<form method="post"
+      asp-action="GetVillasByDate">
+    @*         <div class="row p-0 mx-0 py-4">
 
-        <div class="col-4">
-        <div class="form-group">
-        <label>Check In Date</label>
-        <input asp-for="CheckInDate" type="date" class="form-control" />
-        </div>
-        </div>
+    <div class="col-4">
+    <div class="form-group">
+    <label>Check In Date</label>
+    <input asp-for="CheckInDate" type="date" class="form-control" />
+    </div>
+    </div>
 
-        <div class="col-4 col-md-3 pl-2 pr-2">
-        <div class="form-group">
-        <label>No. of nights</label>
-        <select class="form-select" asp-for="Nights">
-        @for(var i = 1; i < 11; i++)
-        {
-        <option value="@i">@i</option>
-        }
-        </select>
-        </div>
-        </div>
+    <div class="col-4 col-md-3 pl-2 pr-2">
+    <div class="form-group">
+    <label>No. of nights</label>
+    <select class="form-select" asp-for="Nights">
+    @for(var i = 1; i < 11; i++)
+    {
+    <option value="@i">@i</option>
+    }
+    </select>
+    </div>
+    </div>
 
-        <div class="col-4 col-md-2 pt-4 pr-2">
-        <div class="form-group">
-        <label>&nbsp;</label>
-        <button type="button" onclick="fnLoadVillaList()" class="btn btn-success btn-block">
-        <i class="bi bi-search"></i>  &nbsp; Check
-        </button>
-
-        </div>
-        </div>
-        </div> *@
-        @* <partial name="_VillaList" model="Model" /> *@
-    </form>
-    @*     <div id="carouselExampleIndicators1" class="carousel slide">
-    <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleIndicators1" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleIndicators1" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleIndicators1" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
-    <div class="carousel-inner">
-    <div class="carousel-item active">
-    <img src="~/images/slide1.jpg" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-    <img src="~/images/slide1.jpg" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-    <img src="~/images/slide1.jpg" class="d-block w-100" alt="...">
-    </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators1" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
+    <div class="col-4 col-md-2 pt-4 pr-2">
+    <div class="form-group">
+    <label>&nbsp;</label>
+    <button type="button" onclick="fnLoadVillaList()" class="btn btn-success btn-block">
+    <i class="bi bi-search"></i>  &nbsp; Check
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators1" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-    </button>
+
+    </div>
+    </div>
     </div> *@
-</div>
+    @* <partial name="_VillaList" model="Model" /> *@
+</form>
+@*     <div id="carouselExampleIndicators1" class="carousel slide">
+                <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators1" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators1" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators1" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                <div class="carousel-item active">
+                <img src="~/images/slide1.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                <img src="~/images/slide1.jpg" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                <img src="~/images/slide1.jpg" class="d-block w-100" alt="...">
+                </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators1" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators1" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+                </button>
+                </div> *@
+            </div>
 
 @section scripts {
     <script>

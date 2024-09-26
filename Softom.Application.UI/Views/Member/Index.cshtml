@@ -1,4 +1,4 @@
-﻿@model List<Softom.Application.Models.Member>
+﻿@model Softom.Application.UI.ViewModels.MemberVM
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700">
 <link rel="stylesheet" href="@Url.Content("~/Newassets/plugins/global/plugins.bundle.css")">
@@ -7,6 +7,7 @@
 <script src="@Url.Content("https://code.jquery.com/jquery-3.3.1.js")"></script>
 <script src="@Url.Content("https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js")"></script>
 <script src="@Url.Content("~/Newassets/js/pages/components/datatables/data-sources/html.js")"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
 <link rel="stylesheet" href="@Url.Content("~/assets/css/ztyle.bundle.css")" />
 
@@ -14,7 +15,7 @@
     <div class="card-header">
         <h3 class="card-title">Member Details</h3>
         <div class="card-toolbar">
-            <a asp-controller="Member" asp-action="Create" class="btn btn-primary">
+            <a asp-controller="Member" asp-action="Create" class="btn btn-primary btn-sm btn-hover-rise me-5 my-2">
                 <i class="bi bi-plus-circle"></i> Create Member
             </a>
         </div>
@@ -34,21 +35,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.MemberList)
                         {
                             <tr>
                                 <td style="vertical-align: middle">@item.ContactInformation.Firstname</td>
                                 <td style="vertical-align: middle">@item.ContactInformation.Surname</td>
-                                <td style="vertical-align: middle">@item.Createddate.ToString("dd MMMM yyyy")</td>                                
+                                <td style="vertical-align: middle">@item.Createddate.ToString("dd MMMM yyyy")</td>
                                 <td style="vertical-align: middle">@item.ContactInformation.CellNumber</td>
                                 <td style="vertical-align: middle">@item.ContactInformation.PhoneNumber</td>
                                 <td style="vertical-align: middle">
                                     <div class="flex-shrink-0">
                                         <a href="@Url.Action("Upsert", "Member", new { MemberId = item.MemberId })" class="btn btn-icon btn-active-color-primary btn-sm me-1">
                                             <i class="fa fa-toggle-off fa-lg"></i>
-                                        </a>
-                                        <a href="@Url.Action("Details", "Member", new { MemberId = item.MemberId })" class="btn btn-icon btn-active-color-primary btn-sm me-1">
-                                            <i class="fa fa-cog fa-lg"></i>
+                                        </a>                                      
+                                        <a data-bs-toggle="modal" data-bs-target='#exampleModal-@(item.MemberId)' class="btn btn-icon btn-active-color-primary btn-sm me-1">
+                                            <i class="fab fa-cc-apple-pay"></i>
                                         </a>
                                         <a onclick="delete(@item.MemberId)" class="btn btn-icon btn-active-color-primary btn-sm">
                                             <i class="fa fa-trash fa-lg"></i>
@@ -56,6 +57,49 @@
                                     </div>
                                 </td>
                             </tr>
+
+                            <div class="modal fade" id="exampleModal-@(item.MemberId)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-xl" style="border: 1px solid #aaa; border-radius:7px;">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-3 text-success" id="exampleModalLabel">Payment Details</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body m-0">
+                                            <form method="post" class="row" asp-controller="Member" asp-action="CreatePayments">
+                                                <input asp-for="@item.MemberId" name="MemberId" hidden />
+                                                <div class="modal-body py-10 px-lg-17">
+                                                    <!--begin::Scroll-->
+                                                    <div class="scroll-y me-n7 pe-7" id="kt_modal_add_Payment_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_Payment_header" data-kt-scroll-wrappers="#kt_modal_add_Payment_scroll" data-kt-scroll-offset="300px">
+
+                                                        <div class="form-group">
+                                                            <label asp-for="@Model.paymentDetailsVM.PaymentType.PaymentTypeId" class="ms-2">Payment Type</label>
+                                                            <select asp-for="@Model.PaymentTypeId" asp-items="@Model.paymentDetailsVM.PaymentTypeList" aria-label="Select a Role" class="form-control kt-select2" id="kt_select2" data-placeholder="Select a Member..." name="PaymentTypeId">
+                                                            </select>                                                            
+                                                        </div>
+
+                                                        <!--begin::Input group-->
+                                                        <div class="form-group row">
+                                                            <label for="example-text-input" class="ms-2">Amount</label>
+                                                            <div class="col-12">
+                                                                <input asp-for="@Model.Payment.Amount" class="form-control" id="Amount" />
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <!--end::Scroll-->
+                                                </div>
+                                                <!--end::Modal body -->
+                                            
+                                                <div class="modal-footer">
+                                                    <button  type="submit" class="btn btn-outline-warning"><i class="bi bi-file-earmark-ppt"></i> Submit</button>
+                                                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         }
                     </tbody>
                 </table>
@@ -74,6 +118,40 @@
                 "scrollY": true
             });
         });
+
+        function frmchangeSubmit(MemberId) {
+
+            var inputValue = $("#Amount").val();
+
+            alert(document.getElementById("Amount").value);
+
+            alert(inputValue);
+
+            if ($("#kt_select2").val() == "") {
+                swal.fire("PaymentType", "Please enter the Payment Type", "error");
+                return;
+            }
+            if ($("#Amount").val() == "") {
+                swal.fire("Amount", "Please enter the Amount", "error");
+                return;
+            }
+            
+            $.ajax({
+                cache: false,
+                type: "POST",
+                data: {
+                    Member: MemberId,
+                    PaymentType: $("#kt_select2").val(),
+                    Amount: $("#Amount").val()
+                },
+                url: '@Url.Action("CreatePayment", "Payment")',
+                success: function (data) {
+                    swal.fire("Payment", "Successfully Paid", "success");
+                    CloseScreen();
+                    window.location.href = '@Url.Action("Index", "Payment")';
+                }
+            });
+        }
     </script>
 }
 

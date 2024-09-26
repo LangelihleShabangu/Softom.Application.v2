@@ -22,10 +22,9 @@ namespace Softom.Application.BusinessRules.Services.Implementation
         }
         public async Task<PieChartDto> GetBookingPieChartData()
         {
-            var totalBookings = _unitOfWork.Booking.GetAll(u => u.BookingDate >= DateTime.Now.AddDays(-30) &&
-           (u.Status != SD.StatusPending || u.Status == SD.StatusCancelled));
+            var totalBookings = _unitOfWork.Payment.GetAll(u => u.PaymentDate >= DateTime.Now.AddDays(-30));
 
-            var customerWithOneBooking = totalBookings.GroupBy(b => b.UserId).Where(x => x.Count() == 1).Select(x => x.Key).ToList();
+            var customerWithOneBooking = totalBookings.GroupBy(b => b.Notes).Where(x => x.Count() == 1).Select(x => x.Key).ToList();
 
             int bookingsByNewCustomer = customerWithOneBooking.Count();
             int bookingsByReturningCustomer = totalBookings.Count() - bookingsByNewCustomer;
@@ -121,18 +120,17 @@ namespace Softom.Application.BusinessRules.Services.Implementation
 
         public async Task<RadialBarChartDto> GetRevenueChartData()
         {
-            var totalBookings = _unitOfWork.Booking.GetAll(u => u.Status != SD.StatusPending
-          || u.Status == SD.StatusCancelled);
+            var totalBookings = _unitOfWork.Payment.GetAll(u => u.PaymentStatus.Name == SD.StatusPaid);
 
-            var totalRevenue = Convert.ToInt32(totalBookings.Sum(u => u.TotalCost));
+            var totalRevenue = Convert.ToInt32(totalBookings.Sum(f=>f.Amount));
 
-            var countByCurrentMonth = totalBookings.Where(u => u.BookingDate >= currentMonthStartDate &&
-            u.BookingDate <= DateTime.Now).Sum(u => u.TotalCost);
+            var countByCurrentMonth = totalBookings.Where(u => u.Createddate >= currentMonthStartDate &&
+            u.Createddate <= DateTime.Now).Sum(u => u.Amount);
 
-            var countByPreviousMonth = totalBookings.Where(u => u.BookingDate >= previousMonthStartDate &&
-            u.BookingDate <= currentMonthStartDate).Sum(u => u.TotalCost);
+            var countByPreviousMonth = totalBookings.Where(u => u.Createddate >= previousMonthStartDate &&
+            u.Createddate <= currentMonthStartDate).Sum(u => u.Amount);
 
-            return SD.GetRadialCartDataModel(totalRevenue, countByCurrentMonth, countByPreviousMonth);
+            return SD.GetRadialCartDataModel(totalRevenue, Convert.ToDouble(countByCurrentMonth), Convert.ToDouble(countByPreviousMonth));
         }
 
         public async Task<RadialBarChartDto> GetTotalBookingRadialChartData()

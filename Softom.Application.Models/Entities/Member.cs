@@ -8,8 +8,6 @@ namespace Softom.Application.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int MemberId { get; set; }
-        public byte[]? MemberImage { get; set; }
-
         [ForeignKey("Address")]
 		public int? AddressId { get; set; }		
 		[ForeignKey("Association")]

@@ -19,65 +19,14 @@
                     <input asp-for="Member.MemberId" hidden />
                     <input asp-for="ContactInformation.ContactInformationId" hidden />
                     <input asp-for="Address.AddressId" hidden />
-                    <div class="fv-row mb-7">
-                        <!--begin::Label-->
-                        <label class="d-block fw-semibold fs-6 mb-5">Member Image</label>
-                        <!--end::Label-->
-                        <!--begin::Image placeholder-->
-                        <style>
-                            .image-input-placeholder {
-                                background-image: url('~/assets/media/svg/files/blank-image.svg');
-                            }
 
-                            [data-bs-theme="dark"] .image-input-placeholder {
-                                background-image: url('~/assets/media/svg/files/blank-image-dark.svg');
-                            }</style>
-                        <!--end::Image placeholder-->
-                        <!--begin::Image input-->
-                        <div class="image-input image-input-outline image-input-placeholder" data-kt-image-input="true">
-                            <!--begin::Preview existing avatar-->
-                            @if (@Model.Member?.MemberId == 0)
-                            {
-                                <div class="image-input-wrapper w-125px h-125px" style="background-image: url('~\assets\media\avatars\blank.png');"></div>
-                            }
-                            else
-                            {
-                                <div class="image-input-wrapper w-125px h-125px" style="background-image: url('@string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(Model.Member.MemberImage))');"></div>
-                            }
-
-                            <!--end::Preview existing avatar-->
-                            <!--begin::Label-->
-                            <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
-                                <i class="ki-outline ki-pencil fs-7"></i>
-                                <!--begin::Inputs-->
-                                <input type="file" id="txtUploadImage" name="avatar" accept=".png, .jpg, .jpeg" />
-                                <input type="hidden" name="avatar_remove" />
-                                <!--end::Inputs-->
-                            </label>
-                            <!--end::Label-->
-                            <!--begin::Cancel-->
-                            <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
-                                <i class="ki-outline ki-cross fs-2"></i>
-                            </span>
-                            <!--end::Cancel-->
-                            <!--begin::Remove-->
-                            <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
-                                <i class="ki-outline ki-cross fs-2"></i>
-                            </span>
-                            <!--end::Remove-->
-                        </div>
-                        <!--end::Image input-->
-                        <!--begin::Hint-->
-                        <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
-                        <!--end::Hint-->
-                    </div>
-
-                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                    @* <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                     <div class="form-floating mb-3 col-md-12">
-                        <select asp-for="@Model.Member.AssociationId" asp-items="@Model.AssociationList" class="form-control search-select">
+                        <select asp-for="@Model.Member.AssociationId" asp-items="@Model.AssociationList" aria-label="Select a Role" data-control="select2" data-placeholder="Select a Role..." class="form-select fw-bold" required>
                             <option selected>-Select Association-</option>
                         </select>
-                    </div>
+                        <span asp-validation-for="Associations" class="text-danger"></span>
+                    </div> *@
 
                     <div class="form-floating mb-3 col-md-6">
                         <input asp-for="ContactInformation.Firstname" class="form-control" autocomplete="username" aria-required="true" placeholder="" required />
@@ -126,22 +75,22 @@
                     <!--begin::Item-->
                     <div class="row pt-0">
                         <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-                        <div class="form-floating mb-3 col-md-4">
+                        <div class="form-floating mb-3 col-md-6">
                             <input asp-for="Address.AddressLine1" class="form-control" autocomplete="username" aria-required="true" placeholder="" required />
                             <label asp-for="Address.AddressLine1" class="ms-2 text-muted">Address Line 1</label>
                             <span asp-validation-for="Address.AddressLine1" class="text-danger"></span>
                         </div>
-                        <div class="form-floating mb-3 col-md-4">
+                        <div class="form-floating mb-3 col-md-6">
                             <input asp-for="Address.AddressLine2" class="form-control" autocomplete="username" aria-required="true" placeholder="" required />
                             <label asp-for="Address.AddressLine2" class="ms-2 text-muted">Address Line 2</label>
                             <span asp-validation-for="Address.AddressLine2" class="text-danger"></span>
                         </div>
-                        <div class="form-floating mb-3 col-md-4">
+                        <div class="form-floating mb-3 col-md-6">
                             <input asp-for="Address.AddressLine3" class="form-control" aria-required="true" placeholder="" required />
                             <label asp-for="Address.AddressLine3" class="ms-2 text-muted">Address Area</label>
                             <span asp-validation-for="Address.AddressLine3" class="text-danger"></span>
                         </div>
-                        <div class="form-floating mb-3 col-md-12">
+                        <div class="form-floating mb-3 col-md-6">
                             <input asp-for="Address.Code" class="form-control" aria-required="true" placeholder="" required />
                             <label asp-for="Address.Code" class="ms-2 text-muted">Address Code</label>
                             <span asp-validation-for="Address.Code" class="text-danger"></span>

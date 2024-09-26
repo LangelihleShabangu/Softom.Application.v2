@@ -10,6 +10,7 @@ using Softom.Application.Models.Entities;
 using Softom.Application.Models.MV;
 using Softom.Application.UI.ViewModels;
 using System.Globalization;
+using System.Security.Claims;
 
 namespace Softom.Application.UI.Controllers
 {
@@ -20,12 +21,20 @@ namespace Softom.Application.UI.Controllers
         private readonly IMemberService _MemberService;
         private readonly IPaymentTypeService _PaymentTypeService;
         private readonly IAssociationService _AssociationService;
-        public PaymentController(IPaymentServices PaymentService, IMemberService memberService, IPaymentTypeService PaymentTypeService, IAssociationService AssociationService)
+
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+
+        public PaymentController(IPaymentServices PaymentService, IMemberService memberService, IPaymentTypeService PaymentTypeService, IAssociationService AssociationService,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager)
         {
             _PaymentService = PaymentService;
             _MemberService = memberService;
             _PaymentTypeService = PaymentTypeService;
             _AssociationService = AssociationService;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public IActionResult Index()
@@ -70,20 +79,25 @@ namespace Softom.Application.UI.Controllers
             var invoiceVM = new InvoiceVM();
             invoiceVM.Payment = _PaymentService.GetPaymentById(PaymentId);
             invoiceVM.Member = _MemberService.GetMemberById(invoiceVM.Payment.MemberId);
-            invoiceVM.Association = _AssociationService.GetAssociationById(invoiceVM.Member.Association.AssociationId);
+            invoiceVM.Association = _AssociationService.GetAssociationById(invoiceVM.Member.AssociationId.Value);
             var byteInfoStatement = new Softom.Application.BusinessRules.Generate_PDF.CreateInvoicePDF().GeneratePDFFile(invoiceVM).ToArray();
             return File(byteInfoStatement, "APPLICATION/pdf", "Payment_" + System.DateTime.Now.ToString("dd MMMM yyyy") + "_" + invoiceVM.Member.ContactInformation.Firstname + "_" + invoiceVM.Member.ContactInformation.Surname + ".pdf");
-        }             
-
+        }       
+        
         [HttpPost]
         public IActionResult CreatePayment(int Member, int PaymentType, decimal Amount)
         {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            ApplicationUser user = _userManager.FindByIdAsync(userId).GetAwaiter().GetResult();
+
             var payment = new Payment();
             payment.PaymentStatusId = 1; /* Active */
             payment.MemberId = Member;
             payment.PaymentTypeId = PaymentType;
             payment.Amount = Amount;
-            payment.Notes = "Payment";
+            payment.Notes = userId.ToString();
             payment.Createddate = DateTime.Now; 
             payment.PaymentDate = DateTime.Now; 
             payment.Modifieddate = DateTime.Now;
@@ -95,7 +109,8 @@ namespace Softom.Application.UI.Controllers
                 var invoiceVM = new InvoiceVM();
                 invoiceVM.Payment = _PaymentService.GetPaymentById(payment.PaymentId);
                 invoiceVM.Member = _MemberService.GetMemberById(invoiceVM.Payment.MemberId);
-                invoiceVM.Association = _AssociationService.GetAssociationById(invoiceVM.Member.Association.AssociationId);
+
+                invoiceVM.Association = _AssociationService.GetAssociationById(invoiceVM.Member.AssociationId.Value);
                 var byteInfoStatement = new Softom.Application.BusinessRules.Generate_PDF.CreateInvoicePDF().GeneratePDFFile(invoiceVM).ToArray();
                 return File(byteInfoStatement, "APPLICATION/pdf", "Payment_" + System.DateTime.Now.ToString("dd MMMM yyyy") + "_" + invoiceVM.Member.ContactInformation.Firstname + "_" + invoiceVM.Member.ContactInformation.Surname + ".pdf");
             }
@@ -126,6 +141,8 @@ namespace Softom.Application.UI.Controllers
             return View();
         }
 
+        [HttpGet]
+        [Route("/Payment/Delete/{PaymentId}")]
         public IActionResult Delete(int PaymentId)
         {
             Payment? obj = _PaymentService.GetPaymentById(PaymentId);
@@ -133,7 +150,12 @@ namespace Softom.Application.UI.Controllers
             {
                 return RedirectToAction("Error", "Home");
             }
-            return View(obj);
+            else
+            {
+                _PaymentService.DeletePayment(PaymentId);
+                TempData["success"] = "The Payment has been removed successfully.";
+                return RedirectToAction(nameof(Index));
+            }           
         }
 
 

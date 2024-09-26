@@ -20,6 +20,8 @@ namespace Softom.Application.BusinessRules.Common.Utility
         public const string StatusCancelled = "Cancelled";
         public const string StatusRefunded = "Refunded";
 
+        public const string StatusPaid = "Paid";
+
         public static int VillaRoomsAvailable_Count(int villaId, 
             List<VillaNumber> villaNumberList, DateOnly checkInDate, int nights,
            List<Booking> bookings)

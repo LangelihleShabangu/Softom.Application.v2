@@ -13,7 +13,7 @@ namespace Softom.Application.Models
         public string? Surname { get; set; }
         public string? PhoneNumber { get; set; }
         public string? CellNumber { get; set; }
-        public string? EmailAddress { get; set; }
+        public string? EmailAddress { get; set; } = "None";
         public DateTime Createddate { get; set; } = DateTime.UtcNow;
         public DateTime Modifieddate { get; set; } = DateTime.UtcNow;
         public bool Isdeleted { get; set; }

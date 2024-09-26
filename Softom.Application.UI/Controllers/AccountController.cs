@@ -66,8 +66,7 @@ namespace Softom.Application.UI.Controllers
                     Value = x.Name
                 }),
                 RedirectUrl = returnUrl 
-            };
-
+            };            
             return View(registerVM);
         }
 
@@ -119,7 +118,7 @@ namespace Softom.Application.UI.Controllers
             registerVM.RoleList = _roleManager.Roles.Select(x => new SelectListItem
             {
                 Text = x.Name,
-                Value = x.Name
+                Value = x.Id
             });
 
             return View(registerVM);
@@ -132,7 +131,6 @@ namespace Softom.Application.UI.Controllers
             {
                 var result = await _signInManager
                     .PasswordSignInAsync(loginVM.Email, loginVM.Password, loginVM.RememberMe, lockoutOnFailure:false);
-
 
                 if (result.Succeeded)
                 {
