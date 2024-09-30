@@ -1,0 +1,72 @@
+﻿@model Softom.Application.Models.MV.InvoiceVM
+
+<link rel="stylesheet" href="@Url.Content("~/assets/css/ztyle.bundle.css")" />
+
+<!-- begin:: Content -->
+<div class="card card-bordered">
+    <!--begin::Portlet-->
+    <div class="kt-portlet">
+        <div class="kt-invoice-2">
+            <div class="kt-invoice__head">
+                <div class="kt-invoice__container">
+                    <div class="kt-invoice__brand">
+                        <h1 class="kt-invoice__title">Receipt</h1>
+                        <div href="#">
+                            <div class="image-input-wrapper w-245px h-150px" style="background-image: url('@string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(@Model.Association.Logo))');"></div>
+
+                            <span class="kt-invoice__desc">
+                                <span>@Model.Association.Address.AddressLine1<br> @Model.Association.Address.AddressLine2<br> @Model.Association.Address.AddressLine3 <br>@Model.Association.Address.Code</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="kt-invoice__items">
+                        <div class="kt-invoice__item">
+                            <span class="kt-invoice__subtitle">Receipt To:</span>
+                            <span class="kt-invoice__text">
+                                @Model.Member.Address.AddressLine1<br>@Model.Member.Address.AddressLine2<br>@Model.Member.Address.AddressLine3, @Model.Member.Address.Code
+                            </span>
+                        </div>
+                        <div class="kt-invoice__item">
+                            <span class="kt-invoice__subtitle">Date:</span>
+                            <span class="kt-invoice__text">@Model.Payment.PaymentDate.ToString("dd MMMM yyyy")</span>
+                            <span class="kt-invoice__subtitle">Receipt No</span>
+                            <span class="kt-invoice__text">#00 @Model.Payment.PaymentIdspan>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-invoice__body">
+                <div class="kt-invoice__container">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <td>Description</td>
+                                    <td>Item</td>                                    
+                                    <td>Amount</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                    <tr>
+                                        <td>@Model.Payment.PaymentType.Name</td>
+                                        <td>@Model.Payment.PaymentStatus.Name</td>
+                                        <td>@Model.Payment.Amount</td>
+                                    </tr>                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kt-invoice__actions">
+                <div class="kt-invoice__container">
+                    <button type="button" class="btn btn-label-brand btn-bold" onclick="window.print();">Download Invoice</button>
+                    <a class="btn btn-brand btn-bold" asp-action="GetInvoiceDetails" asp-controller="Payment" asp-route-id="@Model.PaymentId">Print Invoice</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--end::Portlet-->
+</div>
+<!-- end:: Content -->

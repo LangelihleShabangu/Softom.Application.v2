@@ -19,8 +19,9 @@ namespace Softom.Application.Models.MV
         public int PaymentId { get; set; }
         public Payment? Payment { get; set; }
         public List<Payment>? PaymentList { get; set; }
-        
-        
+
+        public PaymentDetails? paymentDetailsVM { get; set; }
+
         public Member? Member { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem>? MemberList { get; set; }        

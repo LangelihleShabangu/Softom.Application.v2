@@ -54,6 +54,25 @@ namespace Softom.Application.UI.Controllers
             return View(memberVM);
         }
 
+
+        [HttpGet]
+        public IActionResult MemberPaymentList(int MemberId)
+        {
+            var memberVM = new PaymentDetails();
+            memberVM.PaymentList =  _PaymentService.GetAllPayment().Where(f=>f.MemberId == MemberId).ToList();
+            memberVM.Member = _MemberService.GetMemberById(MemberId);
+            PaymentDetails paymentDetailsVM = new()
+            {
+                PaymentTypeList = _PaymentTypeService.GetAllPaymentType().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.PaymentTypeId.ToString()
+                })
+            };
+            memberVM.paymentDetailsVM = paymentDetailsVM;
+            return View("MemberPaymentList", memberVM);
+        }
+        
         [HttpPost]
         public IActionResult CreatePayments(Softom.Application.UI.ViewModels.MemberVM memberVM)
         {
@@ -84,7 +103,7 @@ namespace Softom.Application.UI.Controllers
                 invoiceVM.Association = _AssociationService.GetAssociationById(invoiceVM.Member.AssociationId.Value);
                 var byteInfoStatement = new Softom.Application.BusinessRules.Generate_PDF.CreateInvoicePDF().GeneratePDFFile(invoiceVM).ToArray();
                 File(byteInfoStatement, "APPLICATION/pdf", "Payment_" + System.DateTime.Now.ToString("dd MMMM yyyy") + "_" + invoiceVM.Member.ContactInformation.Firstname + "_" + invoiceVM.Member.ContactInformation.Surname + ".pdf");
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction( "MemberPaymentDetails","Payment", new { PaymentId = payment.PaymentId });
             }
             return RedirectToAction(nameof(Index));
         }

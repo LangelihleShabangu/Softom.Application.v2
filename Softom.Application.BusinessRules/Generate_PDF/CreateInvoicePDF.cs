@@ -72,7 +72,7 @@ namespace Softom.Application.BusinessRules.Generate_PDF
             tableLayout.SetWidths(headers);        //Set the pdf headers
             tableLayout.WidthPercentage = 100;     //Set the PDF File witdh percentage           
 
-            tableLayout.AddCell(new PdfPCell(new Phrase("Invoice Payment", new Font(Font.FontFamily.HELVETICA, 12, 1, iTextSharp.text.BaseColor.BLACK))) { Colspan = 1, Border = 0, PaddingBottom = 10, HorizontalAlignment = Element.ALIGN_CENTER });
+            tableLayout.AddCell(new PdfPCell(new Phrase("Receipt Payment", new Font(Font.FontFamily.HELVETICA, 12, 1, iTextSharp.text.BaseColor.BLACK))) { Colspan = 1, Border = 0, PaddingBottom = 10, HorizontalAlignment = Element.ALIGN_CENTER });
 
             return tableLayout;
         }
@@ -87,7 +87,7 @@ namespace Softom.Application.BusinessRules.Generate_PDF
             tableLayout.AddCell(new PdfPCell(new Phrase(string.Empty, new Font(Font.FontFamily.HELVETICA, 9, 1, iTextSharp.text.BaseColor.BLACK))) { Colspan = 4, Border = 0, PaddingBottom = 10, HorizontalAlignment = Element.ALIGN_LEFT });
             tableLayout.AddCell(new PdfPCell(new Phrase(string.Empty, new Font(Font.FontFamily.HELVETICA, 9, 1, iTextSharp.text.BaseColor.BLACK))) { Colspan = 4, Border = 0, PaddingBottom = 10, HorizontalAlignment = Element.ALIGN_LEFT });
             tableLayout.AddCell(new PdfPCell(new Phrase(string.Empty, new Font(Font.FontFamily.HELVETICA, 7, 1, iTextSharp.text.BaseColor.BLACK))) { Colspan = 4, Border = 0, PaddingBottom = 10, HorizontalAlignment = Element.ALIGN_CENTER });
-            tableLayout.AddCell(new PdfPCell(new Phrase("Payment Invoice #00" + invoice.Payment.PaymentId, new Font(Font.FontFamily.HELVETICA, 9, 1, iTextSharp.text.BaseColor.BLACK))) { Colspan = 4, Border = 0, PaddingBottom = 10, HorizontalAlignment = Element.ALIGN_RIGHT });
+            tableLayout.AddCell(new PdfPCell(new Phrase("Payment Receipt #00" + invoice.Payment.PaymentId, new Font(Font.FontFamily.HELVETICA, 9, 1, iTextSharp.text.BaseColor.BLACK))) { Colspan = 4, Border = 0, PaddingBottom = 10, HorizontalAlignment = Element.ALIGN_RIGHT });
 
             tableLayout.AddCell(new PdfPCell(new Phrase(string.Empty, new Font(Font.FontFamily.HELVETICA, 9, 1, iTextSharp.text.BaseColor.BLACK))) { Colspan = 4, Border = 0, PaddingBottom = 10, HorizontalAlignment = Element.ALIGN_LEFT });
             tableLayout.AddCell(new PdfPCell(new Phrase(string.Empty, new Font(Font.FontFamily.HELVETICA, 9, 1, iTextSharp.text.BaseColor.BLACK))) { Colspan = 4, Border = 0, PaddingBottom = 10, HorizontalAlignment = Element.ALIGN_LEFT });

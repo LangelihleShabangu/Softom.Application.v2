@@ -14,10 +14,10 @@
 
 <div class="card card-bordered">
     <div class="card-header">
-        <h3 class="card-title">Payment Details</h3>
+        <h3 class="card-title">Member Payment Details - @Model.Member.ContactInformation.Firstname @Model.Member.ContactInformation.Surname (@Model.Member.ContactInformation.CellNumber) </h3>
         <div class="card-toolbar">
             <a data-bs-toggle="modal" data-bs-target="#kt_modal_add_Payment" class="btn btn-primary btn-sm btn-hover-rise me-5 my-2">
-                <i class="bi bi-plus-circle"></i> Create Payment
+                <i class="bi bi-plus-circle"></i> Create Payment 
             </a>
         </div>
     </div>
@@ -38,12 +38,12 @@
                         @foreach (var item in @Model.PaymentList)
                         {
                             <tr>
-                                <td style="vertical-align: middle">@item.Member.ContactInformation.Firstname @item.Member.ContactInformation.Surname</td>
+                                <td style="vertical-align: middle">@Model.Member.ContactInformation.Firstname @Model.Member.ContactInformation.Surname</td>
                                 <td style="vertical-align: middle">@item.PaymentDate.ToString("dd MMMM yyyy")</td>
                                 <td style="vertical-align: middle">@item.PaymentType.Name</td>
                                 <td style="vertical-align: middle">@item.Amount</td>
                                 <td style="vertical-align: middle">
-                                    <div class="flex-shrink-0">                                       
+                                    <div class="flex-shrink-0">
                                         <a asp-controller="Payment" asp-action="GetInvoiceDetails" asp-route-id="@item.PaymentId" class="btn btn-icon btn-active-color-primary btn-sm me-1">
                                             <i class="fa fa-arrow-circle-down fa-lg"></i>
                                         </a>
@@ -93,17 +93,10 @@
                 <div class="modal-body py-10 px-lg-17">
                     <!--begin::Scroll-->
                     <div class="scroll-y me-n7 pe-7" id="kt_modal_add_Payment_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_Payment_header" data-kt-scroll-wrappers="#kt_modal_add_Payment_scroll" data-kt-scroll-offset="300px">
-
-                        <div class="form-group">
-                            <label asp-for="@Model.Member.MemberId" class="ms-2">Member</label>
-                            <select asp-for="@Model.Member.MemberId" asp-items="@Model.MemberList" aria-label="Select a Role" class="form-control kt-select2" id="kt_select2_1" data-placeholder="Select a Member..." name="param">
-                            </select>
-                            <span asp-validation-for="@Model.Member.MemberId" class="text-danger"></span>
-                        </div>
-
+                                                
                         <div class="form-group">
                             <label asp-for="@Model.PaymentType.PaymentTypeId" class="ms-2">Payment Type</label>
-                            <select asp-for="@Model.PaymentType.PaymentTypeId" asp-items="@Model.PaymentTypeList" aria-label="Select a Role" class="form-control kt-select2" id="kt_select2" data-placeholder="Select a Member..." name="param">
+                            <select asp-for="@Model.PaymentType.PaymentTypeId" asp-items="@Model.paymentDetailsVM.PaymentTypeList" aria-label="Select a Role" class="form-control kt-select2" id="kt_select2" data-placeholder="Select a Member..." name="param">
                             </select>
                             <span asp-validation-for="@Model.PaymentType.PaymentTypeId" class="text-danger"></span>
                         </div>
@@ -131,7 +124,7 @@
                     <button type="button" onclick="frmchangeSubmit()"
                             class="btn btn-primary">
                         <span class="indicator-label">Submit</span>
-                    </button>                    
+                    </button>
                     <!--end::Button-->
                 </div>
             </form>
@@ -155,10 +148,6 @@
         }
 
         function frmchangeSubmit() {
-            if ($("#kt_select2_1").val() == "") {
-                swal.fire("kt_select2_1", "Please choose Member", "error");
-                return;
-            }
 
             if ($("#kt_select2").val() == "") {
                 swal.fire("PaymentType", "Please enter the Payment Type", "error");
@@ -173,7 +162,7 @@
                 cache: false,
                 type: "POST",
                 data: {
-                    Member: $("#kt_select2_1").val(),
+                    Member: @Model.Member.MemberId,
                     PaymentType: $("#kt_select2").val(),
                     Amount: $("#Amount").val()
                 },
@@ -181,13 +170,12 @@
                 success: function (data) {
                     swal.fire("Payment", "Successfully Paid", "success");
                     CloseScreen();
-                    window.location.href = '@Url.Action("Index", "Payment")';
+                    window.location.href = '@Url.Action("MemberPaymentList", "Member", new { MemberId = @Model.Member.MemberId })';
                 }
             });
         }
     </script>
 }
-
 
 
 

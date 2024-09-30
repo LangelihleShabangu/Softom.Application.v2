@@ -51,6 +51,9 @@
                                         <a data-bs-toggle="modal" data-bs-target='#exampleModal-@(item.MemberId)' class="btn btn-icon btn-active-color-primary btn-sm me-1">
                                             <i class="fab fa-cc-apple-pay"></i>
                                         </a>
+                                        <a href="@Url.Action("MemberPaymentList", "Member", new { MemberId = item.MemberId })" class="btn btn-icon btn-active-color-primary btn-sm me-1">
+                                            <i class="fab fa-cc-mastercard"></i>
+                                        </a>
                                         <a onclick="delete(@item.MemberId)" class="btn btn-icon btn-active-color-primary btn-sm">
                                             <i class="fa fa-trash fa-lg"></i>
                                         </a>

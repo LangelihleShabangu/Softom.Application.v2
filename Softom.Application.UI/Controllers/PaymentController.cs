@@ -59,10 +59,10 @@ namespace Softom.Application.UI.Controllers
                 item.Member.ContactInformation = _MemberService.GetMemberById(item.MemberId).ContactInformation;
             }
 
-            DateTime startAtMonday = DateTime.Now.AddDays(DayOfWeek.Monday - DateTime.Now.DayOfWeek);
-            DateTime startAtSunday = startAtMonday.AddDays(6);
+            //DateTime startAtMonday = DateTime.Now.AddDays(DayOfWeek.Monday - DateTime.Now.DayOfWeek);
+            //DateTime startAtSunday = startAtMonday.AddDays(6);
 
-            paymentDetailsVM.PaymentList = paymentDetailsVM.PaymentList.Where(f=>f.Createddate >= startAtMonday && f.Createddate <= startAtSunday).ToList();
+            //paymentDetailsVM.PaymentList = paymentDetailsVM.PaymentList.Where(f=>f.Createddate >= startAtMonday && f.Createddate <= startAtSunday).ToList();
 
             return View(paymentDetailsVM);
         }
@@ -70,6 +70,18 @@ namespace Softom.Application.UI.Controllers
         public IActionResult Create()
         {
             return View();
+        }
+
+        [HttpGet]
+        [Route("/Payment/MemberPaymentDetails/{PaymentId}")]
+        public IActionResult MemberPaymentDetails(int PaymentId)
+        {
+            var invoiceVM = new InvoiceVM();
+            invoiceVM.PaymentId = PaymentId;    
+            invoiceVM.Payment = _PaymentService.GetPaymentById(PaymentId);
+            invoiceVM.Member = _MemberService.GetMemberById(invoiceVM.Payment.MemberId);
+            invoiceVM.Association = _AssociationService.GetAssociationById(invoiceVM.Member.AssociationId.Value);
+            return View(invoiceVM);
         }
 
         [HttpGet]
