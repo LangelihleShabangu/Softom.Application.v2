@@ -55,6 +55,11 @@ namespace Softom.Application.BusinessRules.Services.Implementation
             return _unitOfWork.Payment.Get(u => u.PaymentId == id, includeProperties: "Member,PaymentStatus,PaymentType");
         }
 
+        public IEnumerable<Payment> GetAllPayments()
+        {
+            return _unitOfWork.Payment.GetAll();
+        }
+
         public void UpdatePayment(Payment Payment)
         {
             _unitOfWork.Payment.Update(Payment);

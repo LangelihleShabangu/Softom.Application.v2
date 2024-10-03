@@ -11,7 +11,7 @@ function loadRevenueRadialChart() {
         type: 'GET',
         dataType: 'json',
         success: function (data) {
-            document.querySelector("#spanTotalRevenueCount").innerHTML = data.totalCount;
+            document.querySelector("#spanTotalRevenueCount").innerHTML = formatMoney(data.totalCount)) 
 
             var sectionCurrentCount = document.createElement("span");
             if (data.hasRatioIncreased) {

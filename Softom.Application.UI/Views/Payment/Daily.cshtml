@@ -1,0 +1,96 @@
+﻿@model Softom.Application.Models.MV.PaymentDetails
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700">
+<link rel="stylesheet" href="@Url.Content("~/Newassets/plugins/global/plugins.bundle.css")">
+<link rel="stylesheet" href="@Url.Content("~/Newassets/plugins/custom/datatables/datatables.bundle.css")">
+
+<script src="@Url.Content("https://code.jquery.com/jquery-3.3.1.js")"></script>
+<script src="@Url.Content("https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js")"></script>
+<script src="@Url.Content("~/Newassets/js/pages/components/datatables/data-sources/html.js")"></script>
+
+<link rel="stylesheet" href="@Url.Content("~/assets/css/ztyle.bundle.css")" />
+
+<script src="@Url.Content("~/LatestAssets/js/pages/components/forms/widgets/select2.js")"></script>
+
+<div class="card card-bordered">
+    <div class="card-header">
+        <h3 class="card-title">Daily Payment Details - @Model.PaymentList.Sum(f => f.Amount).ToString("c", Softom.Application.BusinessRules.Configuration.CultureInfoSettings.GetZACulture().NumberFormat)</h3>
+    </div>
+    <div class="card-body">
+        <div class="kt-portlet kt-portlet--mobile">
+            <div class="kt-portlet__body" style="border:thin">
+                <table id="example" class="table table-striped- table-bordered table-hover table-checkable" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th>Payment Date</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in @Model.PaymentList)
+                        {
+                            <tr>
+                                <td style="vertical-align: middle">@item.Createddate.ToString("dd MMMM yyyy")</td>
+                                <td style="vertical-align: middle">@item.Amount.ToString("c", Softom.Application.BusinessRules.Configuration.CultureInfoSettings.GetZACulture().NumberFormat)</td>
+                                <td style="vertical-align: middle">Paid</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                "scrollX": true,
+                "scrollY": true
+            });
+        });
+
+        function CloseScreen() {
+            $('#kt_modal_add_Payment').modal('hide')
+        }
+
+        function frmchangeSubmit() {
+            if ($("#kt_select2_1").val() == "") {
+                swal.fire("kt_select2_1", "Please choose Member", "error");
+                return;
+            }
+
+            if ($("#kt_select2").val() == "") {
+                swal.fire("PaymentType", "Please enter the Payment Type", "error");
+                return;
+            }
+            if ($("#Amount").val() == "") {
+                swal.fire("Amount", "Please enter the Amount", "error");
+                return;
+            }
+
+            $.ajax({
+                cache: false,
+                type: "POST",
+                data: {
+                    Member: $("#kt_select2_1").val(),
+                    PaymentType: $("#kt_select2").val(),
+                    Amount: $("#Amount").val()
+                },
+                url: '@Url.Action("CreatePayment", "Payment")',
+                success: function (data) {
+                    swal.fire("Payment", "Successfully Paid", "success");
+                    CloseScreen();
+                    window.location.href = '@Url.Action("Index", "Payment")';
+                }
+            });
+        }
+    </script>
+}
+
+
+
+

@@ -19473,12 +19473,12 @@ code {
 
     .daterangepicker .drp-calendar th.month {
         font-weight: 400;
-        color: #FFFFFF;
+        color: #1c1c1e;
     }
 
     .daterangepicker .drp-calendar th.next span, .daterangepicker .drp-calendar th.prev span {
         border-width: 0 1px 1px 0;
-        border-color: #FFFFFF;
+        border-color: #1c1c1e;
     }
 
     .daterangepicker .drp-calendar th.next span {

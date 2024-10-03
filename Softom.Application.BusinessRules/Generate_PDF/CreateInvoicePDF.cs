@@ -30,7 +30,7 @@ namespace Softom.Application.BusinessRules.Generate_PDF
             {
                 byte[] imageBytes = invoice.Association.Logo;
                 iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(imageBytes);
-                var scalePercent = (((doc.PageSize.Width / image.Width) * 100) - 220);
+                var scalePercent = (((doc.PageSize.Width / image.Width) * 100) - 425);
                 image.ScalePercent(scalePercent);
                 doc.Add(image);
             }

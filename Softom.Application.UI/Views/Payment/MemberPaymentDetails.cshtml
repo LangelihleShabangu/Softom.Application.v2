@@ -12,7 +12,7 @@
                     <div class="kt-invoice__brand">
                         <h1 class="kt-invoice__title">Receipt</h1>
                         <div href="#">
-                            <div class="image-input-wrapper w-245px h-150px" style="background-image: url('@string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(@Model.Association.Logo))');"></div>
+                            <div class="image-input-wrapper w-215px h-150px" style="background-image: url('@string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(@Model.Association.Logo))');"></div>
 
                             <span class="kt-invoice__desc">
                                 <span>@Model.Association.Address.AddressLine1<br> @Model.Association.Address.AddressLine2<br> @Model.Association.Address.AddressLine3 <br>@Model.Association.Address.Code</span>
@@ -30,7 +30,7 @@
                             <span class="kt-invoice__subtitle">Date:</span>
                             <span class="kt-invoice__text">@Model.Payment.PaymentDate.ToString("dd MMMM yyyy")</span>
                             <span class="kt-invoice__subtitle">Receipt No</span>
-                            <span class="kt-invoice__text">#00 @Model.Payment.PaymentIdspan>
+                            <span class="kt-invoice__text">#00 @Model.Payment.PaymentId </span>
                         </div>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                                     <tr>
                                         <td>@Model.Payment.PaymentType.Name</td>
                                         <td>@Model.Payment.PaymentStatus.Name</td>
-                                        <td>@Model.Payment.Amount</td>
+                                    <td>@Model.Payment.Amount.ToString("c", Softom.Application.BusinessRules.Configuration.CultureInfoSettings.GetZACulture().NumberFormat)</td>
                                     </tr>                                
                             </tbody>
                         </table>

@@ -41,7 +41,7 @@
                                 <td style="vertical-align: middle">@Model.Member.ContactInformation.Firstname @Model.Member.ContactInformation.Surname</td>
                                 <td style="vertical-align: middle">@item.PaymentDate.ToString("dd MMMM yyyy")</td>
                                 <td style="vertical-align: middle">@item.PaymentType.Name</td>
-                                <td style="vertical-align: middle">@item.Amount</td>
+                                <td style="vertical-align: middle">@item.Amount.ToString("c", Softom.Application.BusinessRules.Configuration.CultureInfoSettings.GetZACulture().NumberFormat)</td>
                                 <td style="vertical-align: middle">
                                     <div class="flex-shrink-0">
                                         <a asp-controller="Payment" asp-action="GetInvoiceDetails" asp-route-id="@item.PaymentId" class="btn btn-icon btn-active-color-primary btn-sm me-1">

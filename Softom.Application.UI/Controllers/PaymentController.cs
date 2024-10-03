@@ -151,7 +151,58 @@ namespace Softom.Application.UI.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View();
+        }       
+
+
+        [HttpGet]        
+        public IActionResult Daily()
+        {
+            List<Payment> payments = new List<Payment>();
+            var obj = _PaymentService.GetAllPayment().GroupBy(f=>f.Createddate.ToString("dd MMMM yyyy"));
+            var PaymentList = from x in _PaymentService.GetAllPayment()
+                      group x by x.Createddate.ToString("dd MMMM yyyy");
+            var PaymentResults = from y in PaymentList
+                         select new
+                         {
+                             Id = y.Key,
+                             Amount = y.Sum(x => x.Amount)
+                         };
+            
+            foreach(var item in PaymentResults)
+            {
+                payments.Add(new Payment() { Createddate = Convert.ToDateTime(item.Id), Amount = item.Amount });
+            }
+
+            var paymentDetails = new PaymentDetails();
+            paymentDetails.PaymentList = payments;
+
+            return View(paymentDetails);
         }
+
+        //Softom.Application.Models.MV
+        [HttpGet]
+        public IActionResult GetPaymentDetails(PaymentDetails paymentDetails)
+        {
+            List<Payment> payments = new List<Payment>();
+            var PamentMadeList = _PaymentService.GetAllPayment().Where(f =>
+                f.PaymentDate >= Convert.ToDateTime(paymentDetails.PaymentDate.Split("-")[0]) &&
+                f.PaymentDate <= Convert.ToDateTime(paymentDetails.PaymentDate.Split("-")[1])).ToList();
+
+            paymentDetails.PaymentsMade = PamentMadeList;
+
+            var qry = _PaymentService.GetAllPayment().SelectMany
+            (
+                foo => _MemberService.GetAllMember().Where(bar => foo.MemberId == bar.MemberId).DefaultIfEmpty(),
+                (foo, bar) => new
+                {
+                    Foo = foo,
+                    Bar = bar
+                }
+            ).ToList();
+
+            return View(paymentDetails);
+        }
+
 
         [HttpGet]
         [Route("/Payment/Delete/{PaymentId}")]

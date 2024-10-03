@@ -14,6 +14,7 @@ namespace Softom.Application.BusinessRules.Services.Interface
         void CreatePayment(Payment Payment);
         void UpdatePayment(Payment Payment);
         Payment GetPaymentById(int id);
+        public IEnumerable<Payment> GetAllPayments();
         bool DeletePayment(int id);
     }
 }

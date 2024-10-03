@@ -42,9 +42,12 @@
                         <div id="totalUserRadialChart" data-colors='["--bs-warning"]'></div>
                     </div>
                     <div>
-                        <p class="text-muted mb-0">Total Users</p>
+                        <p class="text-muted mb-0">Today`s Payments </p>
                         <h4 class="my-1">
                             <span id="spanTotalUserCount">XX</span>
+                            <a asp-controller="Payment" asp-action="Daily" class="btn btn-icon btn-active-color-primary btn-sm me-1">
+                                <i class="fa fa-eye-slash fa-lg"></i>
+                            </a>
                         </h4>
                     </div>
                     <p class="text-muted mt-3 mb-0" id="sectionUserCount"></p>

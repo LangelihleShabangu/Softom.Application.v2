@@ -1,4 +1,5 @@
-﻿using Softom.Application.BusinessRules.Common.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Softom.Application.BusinessRules.Common.Interfaces;
 using Softom.Application.Infrustructure.Data;
 using Softom.Application.Models;
 
@@ -13,6 +14,18 @@ namespace Softom.Application.Infrustructure.Repository
             entity.Modifieddate = DateTime.Now;
             db.Update(entity);
             return entity;
+        }
+
+        public async Task<IEnumerable<Payment>> GetAsync()
+        {
+            try
+            {
+                return await db.Payment.FromSqlRaw("EXEC sp_GetPayments").ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

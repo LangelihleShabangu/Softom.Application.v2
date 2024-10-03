@@ -114,8 +114,9 @@ namespace Softom.Application.BusinessRules.Services.Implementation
             var countByPreviousMonth = totalUsers.Count(u => u.CreatedDate >= previousMonthStartDate &&
             u.CreatedDate <= currentMonthStartDate);
 
+            var CurrentlyPaid = _unitOfWork.Payment.GetAll().Where(u => u.Createddate.ToString("dd.MM.yyy") == DateTime.Now.ToString("dd.MM.yyy")).Sum(f=>f.Amount);
 
-            return SD.GetRadialCartDataModel(totalUsers.Count(), countByCurrentMonth, countByPreviousMonth);
+            return SD.GetRadialCartDataModel(Convert.ToInt32(CurrentlyPaid), countByCurrentMonth, countByPreviousMonth);
         }
 
         public async Task<RadialBarChartDto> GetRevenueChartData()

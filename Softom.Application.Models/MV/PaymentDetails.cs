@@ -14,11 +14,18 @@ namespace Softom.Application.Models.MV
         public PaymentDetails()
         {
             Payment = new Payment();
-            PaymentList = new List<Payment>();    
+            PaymentList = new List<Payment>();
+            PaymentsMade = new List<Payment>();
+            PaymentsNotMade = new List<Payment>();
         }
         public int PaymentId { get; set; }
         public Payment? Payment { get; set; }
         public List<Payment>? PaymentList { get; set; }
+
+        public List<Payment>? PaymentsMade { get; set; }
+        public List<Payment>? PaymentsNotMade { get; set; }
+
+        public string PaymentDate { get; set; }
 
         public PaymentDetails? paymentDetailsVM { get; set; }
 
