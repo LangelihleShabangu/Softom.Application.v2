@@ -13,17 +13,31 @@ namespace Softom.Application.Models.MV
         public MemberDetails()
         {
             Member = new Member();
-            Address = new Address();            
-            Association = new Association();    
+            Address = new Address();
+            Payment = new Payment();
+            Association = new Association();
+            PaymentList = new List<Payment>();
+            VehicleList = new List<Vehicle>();
         }
         public int MemberId { get; set; }
         public Member? Member { get; set; }
         public ContactInformation? ContactInformation { get; set; }
         public Address? Address { get; set; }
         public List<Member>? Members { get; set; }
+        public Payment? Payment { get; set; }
+        public List<Payment> PaymentList { get; set; }
+        public List<Vehicle> VehicleList { get; set; }
         public Association? Association { get; set; }
         public string? Associations { get; set; }
+
         [ValidateNever]
         public IEnumerable<SelectListItem>? AssociationList { get; set; }
+
+        public PaymentDetails? paymentDetailsVM { get; set; }
+        [ValidateNever]
+        public IEnumerable<SelectListItem>? MemberList { get; set; }
+        public PaymentType? PaymentType { get; set; }
+        [ValidateNever]
+        public IEnumerable<SelectListItem>? PaymentTypeList { get; set; }
     }
 }

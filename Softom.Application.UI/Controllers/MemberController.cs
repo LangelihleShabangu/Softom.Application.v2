@@ -157,21 +157,101 @@ namespace Softom.Application.UI.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetMemberDetailsById(int MemberId)
+        public IActionResult MemberSummary(int MemberId)
         {
+            List<Payment> payments = new List<Payment>();
+            
+            var PaymentList = from x in _PaymentService.GetAllPayment().Where(f=>f.MemberId == MemberId)
+                              group x by x.PaymentType.Name;
+            var PaymentResults = from y in PaymentList
+                                 select new
+                                 {
+                                     Name = y.Key,
+                                     Amount = y.Sum(x => x.Amount)
+                                 };
+
+            foreach (var item in PaymentResults)
+            {
+                payments.Add(new Payment() { Notes = item.Name, Amount = item.Amount });
+            }
+
             MemberDetails MemberDetails = new MemberDetails();
             Member obj = _MemberService.GetMemberById(MemberId);
             Association association = _AssociationService.GetAssociationById(obj.AssociationId.Value);
+
             MemberDetails.AssociationList = _AssociationService.GetAllAssociation().Select(x => new SelectListItem
             {
                 Text = x.AssociationName,
                 Value = x.AssociationId.ToString()
             });
+
             MemberDetails.Member = obj;
-            MemberDetails.Association = association;                
+            MemberDetails.Association = association;
+            MemberDetails.ContactInformation = obj.ContactInformation;
+            MemberDetails.Address = obj.Address;
+            MemberDetails.PaymentList = payments;
+
+            return View("MemberSummary", MemberDetails);
+        }
+
+        [HttpGet]
+        public IActionResult GetMemberDetailsById(int MemberId)
+        {
+            MemberDetails MemberDetails = new MemberDetails();
+            Member obj = _MemberService.GetMemberById(MemberId);
+            Association association = _AssociationService.GetAssociationById(obj.AssociationId.Value);
+
+            MemberDetails.AssociationList = _AssociationService.GetAllAssociation().Select(x => new SelectListItem
+            {
+                Text = x.AssociationName,
+                Value = x.AssociationId.ToString()
+            });
+
+            MemberDetails.Member = obj;
+            MemberDetails.Association = association;            
             MemberDetails.ContactInformation = obj.ContactInformation;  
             MemberDetails.Address = obj.Address;           
             return View("MemberDetails", MemberDetails);
+        }
+
+        [HttpGet]
+        public IActionResult GetPaymentDetailsById(int MemberId)
+        {
+            var MemberDetails = new MemberDetails();
+            var obj = _MemberService.GetMemberById(MemberId);
+            var association = _AssociationService.GetAssociationById(obj.AssociationId.Value);
+            var paymentsList = _PaymentService.GetAllPayment().Where(f => f.MemberId == MemberId).ToList();
+
+            PaymentDetails paymentDetailsVM = new()
+            {
+                PaymentTypeList = _PaymentTypeService.GetAllPaymentType().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.PaymentTypeId.ToString()
+                })
+            };
+          
+            MemberDetails.Member = obj;
+            MemberDetails.Association = association;
+            MemberDetails.PaymentList = paymentsList;
+            MemberDetails.paymentDetailsVM = paymentDetailsVM;
+            MemberDetails.ContactInformation = obj.ContactInformation;
+            MemberDetails.Address = obj.Address;
+            return View("MemberPayments", MemberDetails);
+        }
+
+        [HttpGet]
+        public IActionResult GetVehicleDetailsById(int MemberId)
+        {
+            var MemberDetails = new MemberDetails();  
+            var obj = _MemberService.GetMemberById(MemberId);
+            var vehicleList = _VehicleService.GetAllVehicle().Where(f => f.MemberId == MemberId).ToList();
+            MemberDetails.Member = obj;
+            MemberDetails.Association = _AssociationService.GetAssociationById(obj.AssociationId.Value);
+            MemberDetails.VehicleList = vehicleList ?? new List<Vehicle>();
+            MemberDetails.ContactInformation = obj.ContactInformation;
+            MemberDetails.Address = obj.Address;
+            return View("MemberVehicles", MemberDetails);
         }
 
         [HttpGet]
@@ -301,7 +381,7 @@ namespace Softom.Application.UI.Controllers
             }
 
             TempData["success"] = "Member updated successfully";
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(GetMemberDetailsById), new { MemberId = MemberMV.Member.MemberId });
         }
 
         public IActionResult Delete(int MemberId)

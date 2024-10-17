@@ -13,7 +13,13 @@
         <div class="row pt-0">
             <form method="post" class="row" enctype="multipart/form-data" action="Upsert">
                 <input asp-for="VehicleId" hidden />
+                <input asp-for="MemberId" hidden />
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div class="form-floating mb-3 col-md-6">
+                    <input asp-for="Registration" class="form-control" autocomplete="username" aria-required="true" placeholder="" />
+                    <label asp-for="Registration" class="ms-2 text-muted">Make</label>
+                    <span asp-validation-for="Registration" class="text-danger"></span>
+                </div>
                 <div class="form-floating mb-3 col-md-6">
                     <input asp-for="Make" class="form-control" autocomplete="username" aria-required="true" placeholder="" />
                     <label asp-for="Make" class="ms-2 text-muted">Make</label>
@@ -34,11 +40,11 @@
                     <label asp-for="DiskExpiryDate" class="ms-2 text-muted">Expiry Date</label>
                     <span asp-validation-for="DiskExpiryDate" class="text-danger"></span>
                 </div>
-                <div class="form-floating mb-3 col-md-6">
+               @*  <div class="form-floating mb-3 col-md-6">
                     <input asp-for="Notes" class="form-control" aria-required="true" />
                     <label asp-for="Notes" class="ms-2 text-muted">Notes</label>
                     <span asp-validation-for="Notes" class="text-danger"></span>
-                </div>
+                </div> *@
 
                 <!--end::Item-->
                 <div class="separator separator-dashed my-5"></div>

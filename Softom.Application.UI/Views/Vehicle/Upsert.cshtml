@@ -1,4 +1,4 @@
-﻿@model Softom.Application.Models.Vehicle
+﻿@model Softom.Application.Models.MV.VehicleDetails
 
 <div class="card card-bordered">
     <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
@@ -11,35 +11,40 @@
 
     <div class="card-body border-top p-9">
         <div class="row pt-0">
-
             <form method="post" class="row" enctype="multipart/form-data" action="Upsert">
-
+                <input asp-for="Vehicle.VehicleId" hidden />
+                <input asp-for="Vehicle.MemberId" hidden />
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="form-floating mb-3 col-md-6">
-                    <input asp-for="Make" class="form-control" autocomplete="username" aria-required="true" placeholder="" />
-                    <label asp-for="Make" class="ms-2 text-muted">Make</label>
-                    <span asp-validation-for="Make" class="text-danger"></span>
+                    <input asp-for="Vehicle.Registration" class="form-control" autocomplete="username" aria-required="true" placeholder="" />
+                    <label asp-for="Vehicle.Registration" class="ms-2 text-muted">Make</label>
+                    <span asp-validation-for="Vehicle.Registration" class="text-danger"></span>
                 </div>
                 <div class="form-floating mb-3 col-md-6">
-                    <input asp-for="Model" class="form-control" placeholder="" />
-                    <label asp-for="Model" class="ms-2 text-muted">Model</label>
-                    <span asp-validation-for="Model" class="text-danger"></span>
+                    <input asp-for="Vehicle.Make" class="form-control" autocomplete="username" aria-required="true" placeholder="" />
+                    <label asp-for="Vehicle.Make" class="ms-2 text-muted">Make</label>
+                    <span asp-validation-for="Vehicle.Make" class="text-danger"></span>
                 </div>
                 <div class="form-floating mb-3 col-md-6">
-                    <input asp-for="VINNumber" class="form-control" placeholder="Color" />
-                    <label asp-for="VINNumber" class="ms-2 text-muted">Vin Number</label>
-                    <span asp-validation-for="VINNumber" class="text-danger"></span>
+                    <input asp-for="Vehicle.Model" class="form-control" placeholder="" />
+                    <label asp-for="Vehicle.Model" class="ms-2 text-muted">Model</label>
+                    <span asp-validation-for="Vehicle.Model" class="text-danger"></span>
                 </div>
                 <div class="form-floating mb-3 col-md-6">
+                    <input asp-for="Vehicle.VINNumber" class="form-control" placeholder="Color" />
+                    <label asp-for="Vehicle.VINNumber" class="ms-2 text-muted">Vin Number</label>
+                    <span asp-validation-for="Vehicle.VINNumber" class="text-danger"></span>
+                </div>
+               @*  <div class="form-floating mb-3 col-md-6">
                     <input asp-for="DiskExpiryDate" class="form-control" aria-required="true" />
                     <label asp-for="DiskExpiryDate" class="ms-2 text-muted">Expiry Date</label>
                     <span asp-validation-for="DiskExpiryDate" class="text-danger"></span>
-                </div>
-                <div class="form-floating mb-3 col-md-6">
-                    <input asp-for="Notes" class="form-control" aria-required="true" />
-                    <label asp-for="Notes" class="ms-2 text-muted">Notes</label>
-                    <span asp-validation-for="Notes" class="text-danger"></span>
-                </div>
+                </div> *@
+                @*  <div class="form-floating mb-3 col-md-6">
+                <input asp-for="Notes" class="form-control" aria-required="true" />
+                <label asp-for="Notes" class="ms-2 text-muted">Notes</label>
+                <span asp-validation-for="Notes" class="text-danger"></span>
+                </div> *@
 
                 <!--end::Item-->
                 <div class="separator separator-dashed my-5"></div>

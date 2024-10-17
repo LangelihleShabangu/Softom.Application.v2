@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Softom.Application.BusinessRules.Services.Implementation;
 using Softom.Application.BusinessRules.Services.Interface;
 using Softom.Application.Models;
 using Softom.Application.Models.Entities;
 using Softom.Application.Models.MV;
+using Softom.Application.UI.ViewModels;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Softom.Application.UI.Controllers
@@ -13,12 +15,13 @@ namespace Softom.Application.UI.Controllers
     [Authorize]
     public class VehicleController : Controller
     {
-        private readonly IAddressService _AddressService;
+        private readonly IStatusService _StatusService;
         private readonly IVehicleService _VehicleService;
-        
-        public VehicleController(IVehicleService VehicleService)
-        {            
+
+        public VehicleController(IVehicleService VehicleService, IStatusService StatusService)
+        {
             _VehicleService = VehicleService;
+            _StatusService = StatusService;
         }
 
         public IActionResult Index()
@@ -37,24 +40,21 @@ namespace Softom.Application.UI.Controllers
         //    return View("Detail", new Application.Models.MV.VehicleDetails());
         //}
 
-
-        //[HttpGet]
-        //public IActionResult Upsert(int VehicleId)
-        //{
-        //    VehicleDetails VehicleDetails = new VehicleDetails();
-        //    Vehicle? obj = _VehicleService.GetVehicleById(VehicleId);
-
-        //    if (obj == null)
-        //    {
-        //        return RedirectToAction("Error", "Home");
-        //    }
-        //    else
-        //    {
-        //        VehicleDetails.Vehicle = obj;
-        //        VehicleDetails.Address = obj.Address;
-        //    }
-        //    return View(VehicleDetails);
-        //}
+        [HttpGet]
+        public IActionResult Upsert(int VehicleId)
+        {            
+            Vehicle? obj = _VehicleService.GetVehicleById(VehicleId);
+            VehicleDetails VehicleDetails = new()
+            {
+                StatusList = _StatusService.GetAllStatus().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.StatusId.ToString()
+                }),
+                Vehicle = obj,
+            };
+            return View(VehicleDetails);
+        }
 
         //[HttpPost]
         //public IActionResult Update(Vehicle obj)
@@ -93,10 +93,10 @@ namespace Softom.Application.UI.Controllers
 
         //    Vehicle Vehicle = new Vehicle()
         //    {
-        //        AddressId = VehicleMV.Address.AddressId,
+        //        StatusId = VehicleMV.Status.StatusId,
         //        VehicleName = VehicleMV.Vehicle.VehicleName,
         //        CellNumber = VehicleMV.Vehicle.CellNumber,
-        //        EmailAddress = VehicleMV.Vehicle.EmailAddress,
+        //        EmailStatus = VehicleMV.Vehicle.EmailStatus,
         //        Logo = VehicleMV.Vehicle.Logo,
         //        Createddate = System.DateTime.Now,
         //        PhoneNumber = VehicleMV.Vehicle.PhoneNumber,
@@ -111,15 +111,15 @@ namespace Softom.Application.UI.Controllers
 
         //    if (VehicleMV.Vehicle.VehicleId == 0)
         //    {
-        //        _AddressService.CreateAddress(VehicleMV.Address);
-        //        Vehicle.AddressId = VehicleMV.Address.AddressId;
+        //        _StatusService.CreateStatus(VehicleMV.Status);
+        //        Vehicle.StatusId = VehicleMV.Status.StatusId;
         //        _VehicleService.CreateVehicle(Vehicle);
         //        TempData["success"] = "Vehicle created successfully";
         //        return RedirectToAction(nameof(Index));
         //    }
         //    else
         //    {
-        //        _AddressService.UpdateAddress(VehicleMV.Address);
+        //        _StatusService.UpdateStatus(VehicleMV.Status);
         //        _VehicleService.UpdateVehicle(Vehicle);
         //        TempData["success"] = "Vehicle updated successfully";
         //        return RedirectToAction(nameof(Index));
@@ -128,14 +128,14 @@ namespace Softom.Application.UI.Controllers
 
         [HttpPost]
         public async Task<IActionResult> CreateVehicle(Vehicle vehicle)
-        {            
+        {
             vehicle.Notes = "None";
             vehicle.StatusId = 1; //Active
             vehicle.CreatedBy = new Guid();
             vehicle.ModifiedBy = new Guid();
             vehicle.Createddate = DateTime.Now;
-            vehicle.Modifieddate = DateTime.Now;            
-            
+            vehicle.Modifieddate = DateTime.Now;
+
             try
             {
                 _VehicleService.CreateVehicle(vehicle);
@@ -143,7 +143,30 @@ namespace Softom.Application.UI.Controllers
                 return RedirectToAction(nameof(Index), "Member");
             }
             catch
-            {  
+            {
+                TempData["success"] = "Vehicle updated successfully";
+            }
+            return RedirectToAction(nameof(Index), "Member");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Upsert(Vehicle vehicle)
+        {
+            vehicle.Notes = "None";
+            vehicle.StatusId = 1; //Active
+            vehicle.CreatedBy = new Guid();
+            vehicle.ModifiedBy = new Guid();
+            vehicle.Createddate = DateTime.Now;
+            vehicle.Modifieddate = DateTime.Now;
+
+            try
+            {
+                _VehicleService.UpdateVehicle(vehicle);
+                TempData["success"] = "Vehicle created successfully";
+                return RedirectToAction(nameof(Index), "Member");
+            }
+            catch
+            {
                 TempData["success"] = "Vehicle updated successfully";
             }
             return RedirectToAction(nameof(Index), "Member");
@@ -156,7 +179,11 @@ namespace Softom.Application.UI.Controllers
             {
                 return RedirectToAction("Error", "Home");
             }
-            return View(obj);
+            else
+            {
+                TempData["success"] = "The Vehicle has been deleted successfully.";
+                return RedirectToAction("GetVehicleDetailsById", "Member", new { MemberId = obj.MemberId });
+            }
         }
 
         [HttpPost]
@@ -166,7 +193,7 @@ namespace Softom.Application.UI.Controllers
             if (deleted)
             {
                 TempData["success"] = "The Vehicle has been deleted successfully.";
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("GetVehicleDetailsById", "Member", new { MemberId = obj.MemberId });
             }
             else
             {
