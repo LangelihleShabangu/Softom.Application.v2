@@ -25,6 +25,7 @@ namespace Softom.Application.Infrustructure.Repository
         public IPaymentRepository Payment { get; private set; }
         public IPaymentTypeRepository PaymentType { get; private set; }
         public IPaymentStatusRepository PaymentStatus { get; private set; }
+        public IVehicleRepository Vehicle { get; private set; }
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
@@ -42,6 +43,7 @@ namespace Softom.Application.Infrustructure.Repository
             Status = new StatusRepository(_db);
             PaymentType = new PaymentTypeRepository(_db);
             PaymentStatus = new PaymentStatusRepository(_db);
+            Vehicle = new VehicleRepository(_db);
         }
 
         public void Save()

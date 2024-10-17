@@ -43,11 +43,14 @@ builder.Services.AddScoped<IVillaService, VillaService>();
 builder.Services.AddScoped<IAmenityService, AmenityService>();
 builder.Services.AddScoped<IBookingService, BookingService>();
 
-builder.Services.AddScoped<IPaymentServices, PaymentServices>();
+
+builder.Services.AddScoped<IVehicleService, VehicleService>();
 builder.Services.AddScoped<IStatusService, StatusService>();
 builder.Services.AddScoped<IPaymentTypeService, PaymentTypeService>();
 builder.Services.AddScoped<IPaymentStatusService, PaymentStatusService>();
 
+
+builder.Services.AddScoped<IPaymentServices, PaymentServices>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IAssociationService, AssociationService>();
 builder.Services.AddScoped<IVillaNumberService, VillaNumberService>();

@@ -1,0 +1,306 @@
+﻿@model Softom.Application.Models.MV.MemberDetails
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700">
+<link rel="stylesheet" href="@Url.Content("~/Newassets/plugins/global/plugins.bundle.css")">
+<link rel="stylesheet" href="@Url.Content("~/Newassets/plugins/custom/datatables/datatables.bundle.css")">
+
+<script src="@Url.Content("https://code.jquery.com/jquery-3.3.1.js")"></script>
+<script src="@Url.Content("https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js")"></script>
+<script src="@Url.Content("~/Newassets/js/pages/components/datatables/data-sources/html.js")"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+<link rel="stylesheet" href="@Url.Content("~/assets/css/ztyle.bundle.css")" />
+
+<div class="card card-bordered">
+    <div class="card-header">
+        <h3 class="card-title">Member Details</h3>
+        @* <div class="card-toolbar">
+        <a asp-controller="Member" asp-action="Create" class="btn btn-primary btn-sm btn-hover-rise me-5 my-2">
+        <i class="bi bi-plus-circle"></i> Create Member
+        </a>
+        </div> *@
+    </div>
+    <div class="card-body">
+        <!--Begin::App-->
+        <div class="kt-grid kt-grid--desktop kt-grid--ver kt-grid--ver-desktop kt-app">
+
+            <!--Begin:: App Aside Mobile Toggle-->
+            <button class="kt-app__aside-close" id="kt_profile_aside_close">
+                <i class="la la-close"></i>
+            </button>
+
+            <!--End:: App Aside Mobile Toggle-->
+            <!--Begin:: App Aside-->
+            <div class="kt-grid__item kt-app__toggle kt-app__aside kt-app__aside--sm kt-app__aside--fit" id="kt_profile_aside">
+
+                <!--Begin:: Portlet-->
+                <div class="kt-portlet">
+                    <div class="kt-portlet__body">
+                        <div class="kt-widget kt-widget--general-1">
+                            <div class="kt-widget__wrapper">
+                                <div class="kt-widget__label">
+                                    <a href="#" class="kt-widget__title">
+                                        @Model.ContactInformation.Firstname @Model.ContactInformation.Surname
+                                         
+                                    </a>
+                                    <span class="kt-widget__desc">
+                                        @Model.Association.AssociationName
+                                    </span>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kt-portlet__separator"></div>
+                    <div class="kt-portlet__body">
+                        <ul class="kt-nav kt-nav--bolder kt-nav--fit-ver kt-nav--v4" role="tablist">
+                            <li class="kt-nav__item  active ">
+                                <a class="kt-nav__link active" href="?page=custom/profile/personal-information" role="tab">
+                                    <span class="kt-nav__link-icon"><i class="flaticon2-user"></i></span>
+                                    <span class="kt-nav__link-text">Personal Information</span>
+                                </a>
+                            </li>
+                            <li class="kt-nav__item  ">
+                                <a class="kt-nav__link" href="?page=custom/profile/account-settings" role="tab">
+                                    <span class="kt-nav__link-icon"><i class="flaticon-feed"></i></span>
+                                    <span class="kt-nav__link-text">Payment Information</span>
+                                </a>
+                            </li>
+                            <li class="kt-nav__item  ">
+                                <a class="kt-nav__link" href="?page=custom/profile/change-password" role="tab">
+                                    <span class="kt-nav__link-icon"><i class="flaticon2-settings"></i></span>
+                                    <span class="kt-nav__link-text">Vehicle Information</span>
+                                </a>
+                            </li>
+                            <li class="kt-nav__item  ">
+                                <a class="kt-nav__link" href="?page=custom/profile/user-settings" role="tab">
+                                    <span class="kt-nav__link-icon"><i class="flaticon2-chart2"></i></span>
+                                    <span class="kt-nav__link-text">User Settings</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="kt-portlet__separator"></div>
+                </div>
+
+                <!--End:: Portlet-->
+                <!--Begin:: Portlet-->
+                <div class="kt-portlet kt-portlet--head-noborder">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title  kt-font-danger">
+                                Important Update
+                            </h3>
+                        </div>                       
+                    </div>
+                    <div class="kt-portlet__body kt-portlet__body--fit-top">
+                        <div class="kt-section kt-section--space-sm" style="align-content:center">
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+                        </div>                       
+                    </div>
+                </div>
+                <!--End:: Portlet-->
+            </div>
+
+            <!--End:: App Aside-->
+            <!--Begin:: App Content-->
+            <div class="kt-grid__item kt-grid__item--fluid kt-app__content">
+                <div class="kt-portlet">
+                    <div class="kt-portlet__head">
+                        <div class="kt-portlet__head-label">
+                            <h3 class="kt-portlet__head-title">Member Information <small>Update member personal informaiton</small></h3>
+                        </div>
+                        <div class="kt-portlet__head-toolbar">
+                            <div class="kt-portlet__head-wrapper">
+                                <div class="dropdown dropdown-inline">
+                                    <button type="button" class="btn btn-label-brand btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="flaticon2-gear"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <ul class="kt-nav">
+                                            <li class="kt-nav__section kt-nav__section--first">
+                                                <span class="kt-nav__section-text">Export Tools</span>
+                                            </li>
+                                            <li class="kt-nav__item">
+                                                <a href="#" class="kt-nav__link">
+                                                    <i class="kt-nav__link-icon la la-print"></i>
+                                                    <span class="kt-nav__link-text">Print</span>
+                                                </a>
+                                            </li>
+                                            <li class="kt-nav__item">
+                                                <a href="#" class="kt-nav__link">
+                                                    <i class="kt-nav__link-icon la la-copy"></i>
+                                                    <span class="kt-nav__link-text">Copy</span>
+                                                </a>
+                                            </li>
+                                            <li class="kt-nav__item">
+                                                <a href="#" class="kt-nav__link">
+                                                    <i class="kt-nav__link-icon la la-file-excel-o"></i>
+                                                    <span class="kt-nav__link-text">Excel</span>
+                                                </a>
+                                            </li>
+                                            <li class="kt-nav__item">
+                                                <a href="#" class="kt-nav__link">
+                                                    <i class="kt-nav__link-icon la la-file-text-o"></i>
+                                                    <span class="kt-nav__link-text">CSV</span>
+                                                </a>
+                                            </li>
+                                            <li class="kt-nav__item">
+                                                <a href="#" class="kt-nav__link">
+                                                    <i class="kt-nav__link-icon la la-file-pdf-o"></i>
+                                                    <span class="kt-nav__link-text">PDF</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form method="post" class="kt-form kt-form--label-right" enctype="multipart/form-data" id="kt_profile_form" asp-controller="Member" asp-action="Upsert">
+                        <input asp-for="@Model.Member.MemberId" hidden />
+                        <input asp-for="@Model.Member.ContactInformation.ContactInformationId" hidden />
+                        <input asp-for="@Model.Address.AddressId" hidden />
+
+                        <div class="kt-portlet__body">
+                            <div class="kt-section kt-section--first">
+                                <div class="kt-section__body">
+                                    <div class="row">
+                                        <label class="col-xl-3"></label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <h3 class="kt-section__title kt-section__title-sm">Member Info:</h3>
+                                        </div>
+                                    </div>
+                                  
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Firstname</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <input asp-for="@Model.ContactInformation.Firstname" class="form-control" autocomplete="username" aria-required="true" placeholder="" required />
+                                            <span asp-validation-for="@Model.ContactInformation.Firstname" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Surname</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <input asp-for="@Model.ContactInformation.Surname" class="form-control" placeholder="" required />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Id Number</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <input asp-for="@Model.ContactInformation.Notes" class="form-control" placeholder="" required />
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <label class="col-xl-3"></label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <h3 class="kt-section__title kt-section__title-sm">Contact Info:</h3>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Cell Number</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend"><span class="input-group-text"><i class="la la-phone"></i></span></div>                                                
+                                                <input asp-for="@Model.ContactInformation.CellNumber" class="form-control" placeholder="CellNumber" aria-describedby="basic-addon1" required />
+                                            </div>
+                                            <span class="form-text text-muted">We'll never share your contact with anyone else.</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Contact Phone</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend"><span class="input-group-text"><i class="la la-phone"></i></span></div>
+                                                <input asp-for="@Model.ContactInformation.PhoneNumber" class="form-control" placeholder="" required aria-describedby="basic-addon1" />
+                                            </div>
+                                            <span class="form-text text-muted">We'll never share your contact with anyone else.</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Email Address</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend"><span class="input-group-text"><i class="la la-at"></i></span></div>                                                
+                                                <input asp-for="@Model.ContactInformation.EmailAddress" class="form-control" placeholder="Email" aria-describedby="basic-addon1" required />
+                                            </div>
+                                        </div>
+                                    </div> 
+
+                                    <div class="separator separator-dashed my-5"></div>
+                                    <div class="row">
+                                        <label class="col-xl-3"></label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <h3 class="kt-section__title kt-section__title-sm">Address Information :</h3>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Address Line 1</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend"><span class="input-group-text"><i class="la la-envelope"></i></span></div>
+                                                <input asp-for="@Model.Address.AddressLine1" class="form-control" aria-required="true" placeholder="" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Address Line 2</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend"><span class="input-group-text"><i class="la la-envelope"></i></span></div>
+                                                <input asp-for="@Model.Address.AddressLine2" class="form-control" aria-required="true" placeholder="" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Area</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend"><span class="input-group-text"><i class="la la-envelope"></i></span></div>
+                                                <input asp-for="@Model.Address.AddressLine3" class="form-control" aria-required="true" placeholder="" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">Code</label>
+                                        <div class="col-lg-9 col-xl-6">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend"><span class="input-group-text"><i class="la la-envelope"></i></span></div>
+                                                <input asp-for="@Model.Address.Code" class="form-control" aria-required="true" placeholder="" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kt-portlet__foot">
+                            <div class="kt-form__actions">
+                                <div class="row">
+                                    <div class="col-lg-3 col-xl-3">
+                                    </div>
+                                    <div class="col-lg-9 col-xl-9">
+                                        <button type="submit" class="btn btn-success">Submit</button>&nbsp;
+                                        <button type="reset" class="btn btn-secondary">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!--End:: App Content-->
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+
+

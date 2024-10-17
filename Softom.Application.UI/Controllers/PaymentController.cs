@@ -51,7 +51,7 @@ namespace Softom.Application.UI.Controllers
                     Text = u.Name,
                     Value = u.PaymentTypeId.ToString()
                 }),
-                PaymentList = _PaymentService.GetAllPayment().ToList()
+                PaymentList = _PaymentService.GetAllPayment().Where(f=>f.Createddate >= Convert.ToDateTime("2024-09-20") && f.Createddate <= DateTime.Now.AddDays(1)).ToList(),
             };
 
             foreach(var item in paymentDetailsVM.PaymentList)

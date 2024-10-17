@@ -11,18 +11,30 @@
 
 <link rel="stylesheet" href="@Url.Content("~/assets/css/ztyle.bundle.css")" />
 
+<div class="kt-portlet kt-portlet--tabs">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">Payment Made Report by Date</h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <ul class="nav nav-tabs nav-tabs-line nav-tabs-line-right" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="modal" data-bs-target='#exampleModal'>
+                        <i class="flaticon-upload-1"></i> Unpaid Members Report
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="modal" data-bs-target='#exampleModal1'>
+                        <i class="flaticon-upload-1"></i> Paid Members Report
+                    </a>
+                </li>               
+            </ul>
+        </div>
+    </div>
 
-<div class="card-body">
     <div class="kt-portlet kt-portlet--mobile">
         <div class="kt-portlet__body" style="border:thin">
-
             <div class="kt-portlet">
-                <div class="kt-portlet__head">
-                    <div class="kt-portlet__head-label">
-                        <h3 class="kt-portlet__head-title">Payment Made Report by Date</h3>
-                    </div>
-                </div>
-
                 <form method="post" class="kt-form kt-form--label-right" enctype="multipart/form-data" asp-action="GetPaymentDetails" asp-controller="Report">
                     <div class="kt-portlet__body">
                         <div class="form-group row">
@@ -34,7 +46,7 @@
                                 <button type="submit" class="btn btn-brand">Submit</button>
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                 </form>
 
                 <!--end::Form-->
@@ -64,7 +76,7 @@
                                             @foreach (var item in @Model.PaymentsMade)
                                             {
                                                 <tr>
-                                                    <td style="vertical-align: middle">@item.Createddate.ToString("dd MMMM yyyy")</td>
+                                                    <td style="vertical-align: middle">@item.PaymentDate.ToString("dd MMMM yyyy")</td>
                                                     <td style="vertical-align: middle">@item.Notes</td>
                                                     <td style="vertical-align: middle">@item.Amount.ToString("c", Softom.Application.BusinessRules.Configuration.CultureInfoSettings.GetZACulture().NumberFormat)</td>
                                                     <td style="vertical-align: middle">@item.Member.ContactInformation.Firstname @item.Member.ContactInformation.Surname</td>
@@ -77,41 +89,107 @@
                         </div>
                     </div>
                 }
-                @if (@Model.PaymentsNotMade != null && @Model.PaymentsNotMade.Count()>0)
+                @if (@Model.PaymentsNotMade != null && @Model.PaymentsNotMade.Count() > 0)
                 {
                     <div class="card card-bordered">
-                    <div class="card-header">
-                        <h3 class="card-title">Unpaid Members</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="kt-portlet kt-portlet--mobile">
-                            <div class="kt-portlet__body" style="border:thin">
-                                <table id="example1" class="table table-striped- table-bordered table-hover table-checkable" style="width: 100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Firstname</th>
-                                            <th>Surname</th>
-                                            <th>Cell Number</th>
-                                            <th>Phone Number</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in @Model.PaymentsNotMade)
-                                        {
+                        <div class="card-header">
+                            <h3 class="card-title">Unpaid Members</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="kt-portlet kt-portlet--mobile">
+                                <div class="kt-portlet__body" style="border:thin">
+                                    <table id="example1" class="table table-striped- table-bordered table-hover table-checkable" style="width: 100%">
+                                        <thead>
                                             <tr>
-                                                <td style="vertical-align: middle">@item.Member.ContactInformation.Firstname</td>
-                                                <td style="vertical-align: middle">@item.Member.ContactInformation.Surname</td>
-                                                <td style="vertical-align: middle">@item.Member.ContactInformation.CellNumber</td>
-                                                <td style="vertical-align: middle">@item.Member.ContactInformation.PhoneNumber</td>
+                                                <th>Firstname</th>
+                                                <th>Surname</th>
+                                                <th>Cell Number</th>
+                                                <th>Phone Number</th>
                                             </tr>
-                                        }
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in @Model.PaymentsNotMade)
+                                            {
+                                                <tr>
+                                                    <td style="vertical-align: middle">@item.Member.ContactInformation.Firstname</td>
+                                                    <td style="vertical-align: middle">@item.Member.ContactInformation.Surname</td>
+                                                    <td style="vertical-align: middle">@item.Member.ContactInformation.CellNumber</td>
+                                                    <td style="vertical-align: middle">@item.Member.ContactInformation.PhoneNumber</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" style="border: 1px solid #aaa; border-radius:7px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-3 text-success" id="exampleModalLabel">Payment Details</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body m-0">
+                <form method="post" class="kt-form kt-form--label-right" enctype="multipart/form-data" asp-action="GetPaymentDetails_PDF" asp-controller="Report">
+                    <div class="modal-body py-10 px-lg-17">
+                        <!--begin::Scroll-->
+                        <div class="scroll-y me-n7 pe-7" data-kt-scroll-offset="300px">
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">Choose Start and End Date</label>
+                                <div class="col-lg-4 col-md-9 col-sm-12">
+                                    <input asp-for="@Model.PaymentDate" class="form-control" id="kt_daterangepicker_1" readonly placeholder="Select time" type="text" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Modal body -->
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-outline-warning"><i class="bi bi-file-earmark-ppt"></i> Submit</button>
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-xl" style="border: 1px solid #aaa; border-radius:7px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-3 text-success" id="exampleModalLabel1">Payment Details</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body m-0">
+                <form method="post" class="kt-form kt-form--label-right" enctype="multipart/form-data" asp-action="GetPaymentDetails_PDF_Paid" asp-controller="Report">
+                    <div class="modal-body py-10 px-lg-17">
+                        <!--begin::Scroll-->
+                        <div class="scroll-y me-n7 pe-7" data-kt-scroll-offset="300px">
+
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">Choose Start and End Date</label>
+                                <div class="col-lg-4 col-md-9 col-sm-12">
+                                    <input asp-for="@Model.PaymentDate" class="form-control" id="kt_daterangepicker_1" readonly placeholder="Select time" type="text" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end::Modal body -->
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-outline-warning"><i class="bi bi-file-earmark-ppt"></i> Submit</button>
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

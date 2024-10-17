@@ -22,11 +22,19 @@ namespace Softom.Application.UI.Controllers
         private readonly IAssociationService _AssociationService;
         private readonly IContactInformationService _ContactInformationService;
 
-        private readonly IPaymentServices _PaymentService;        
+        private readonly IPaymentServices _PaymentService;
+        private readonly IVehicleService _VehicleService;
         private readonly IPaymentTypeService _PaymentTypeService;
         private readonly UserManager<ApplicationUser> _userManager;
-        public MemberController(IMemberService MemberService, IAddressService AddressService, IContactInformationService ContactInformationService,
-            IAssociationService AssociationService, IPaymentTypeService PaymentTypeService, UserManager<ApplicationUser> userManager, IPaymentServices PaymentService)
+        public MemberController(
+            IMemberService MemberService, 
+            IAddressService AddressService, 
+            IContactInformationService ContactInformationService,
+            IAssociationService AssociationService, 
+            IPaymentTypeService PaymentTypeService, 
+            UserManager<ApplicationUser> userManager, 
+            IPaymentServices PaymentService,
+            IVehicleService VehicleService)
         {
             _AddressService = AddressService;
             _MemberService = MemberService;
@@ -35,6 +43,7 @@ namespace Softom.Application.UI.Controllers
             _PaymentTypeService = PaymentTypeService;
             _userManager = userManager;
             _PaymentService = PaymentService;
+            _VehicleService = VehicleService;
         }
 
         public IActionResult Index()
@@ -54,8 +63,12 @@ namespace Softom.Application.UI.Controllers
             return View(memberVM);
         }
 
+        public IActionResult MemberDetails()
+        {
+			return View();
+		}
 
-        [HttpGet]
+	    [HttpGet]
         public IActionResult MemberPaymentList(int MemberId)
         {
             var memberVM = new PaymentDetails();
@@ -76,7 +89,6 @@ namespace Softom.Application.UI.Controllers
         [HttpPost]
         public IActionResult CreatePayments(Softom.Application.UI.ViewModels.MemberVM memberVM)
         {
-
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
@@ -92,8 +104,8 @@ namespace Softom.Application.UI.Controllers
             payment.PaymentDate = DateTime.Now;
             payment.Modifieddate = DateTime.Now;
 
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 _PaymentService.CreatePayment(payment);
                 TempData["success"] = "The Payment has been created successfully.";
                 var invoiceVM = new InvoiceVM();
@@ -104,8 +116,24 @@ namespace Softom.Application.UI.Controllers
                 var byteInfoStatement = new Softom.Application.BusinessRules.Generate_PDF.CreateInvoicePDF().GeneratePDFFile(invoiceVM).ToArray();
                 File(byteInfoStatement, "APPLICATION/pdf", "Payment_" + System.DateTime.Now.ToString("dd MMMM yyyy") + "_" + invoiceVM.Member.ContactInformation.Firstname + "_" + invoiceVM.Member.ContactInformation.Surname + ".pdf");
                 return RedirectToAction( "MemberPaymentDetails","Payment", new { PaymentId = payment.PaymentId });
+            //}
+            //return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Member obj)
+        {
+            bool deleted = _MemberService.DeleteMember(obj.MemberId);
+            if (deleted)
+            {
+                TempData["success"] = "The Member has been deleted successfully.";
+                return RedirectToAction(nameof(Index));
             }
-            return RedirectToAction(nameof(Index));
+            else
+            {
+                TempData["error"] = "Failed to delete the Payment.";
+            }
+            return View();
         }
 
         public IActionResult Create()
@@ -126,6 +154,24 @@ namespace Softom.Application.UI.Controllers
         public IActionResult Details(int MemberId)
         {
             return View("Detail", new Application.Models.MV.MemberDetails());
+        }
+
+        [HttpGet]
+        public IActionResult GetMemberDetailsById(int MemberId)
+        {
+            MemberDetails MemberDetails = new MemberDetails();
+            Member obj = _MemberService.GetMemberById(MemberId);
+            Association association = _AssociationService.GetAssociationById(obj.AssociationId.Value);
+            MemberDetails.AssociationList = _AssociationService.GetAllAssociation().Select(x => new SelectListItem
+            {
+                Text = x.AssociationName,
+                Value = x.AssociationId.ToString()
+            });
+            MemberDetails.Member = obj;
+            MemberDetails.Association = association;                
+            MemberDetails.ContactInformation = obj.ContactInformation;  
+            MemberDetails.Address = obj.Address;           
+            return View("MemberDetails", MemberDetails);
         }
 
         [HttpGet]
@@ -218,6 +264,30 @@ namespace Softom.Application.UI.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> CreateVehicle(Softom.Application.UI.ViewModels.MemberVM memberVM)
+        {
+            memberVM.Vehicle.Notes = "None";
+            memberVM.Vehicle.StatusId = 1; //Active
+            memberVM.Vehicle.CreatedBy = new Guid();
+            memberVM.Vehicle.ModifiedBy = new Guid();
+            memberVM.Vehicle.Createddate = DateTime.Now;
+            memberVM.Vehicle.Modifieddate = DateTime.Now;
+            memberVM.Vehicle.MemberId = memberVM.MemberId;
+
+            try
+            {
+                _VehicleService.CreateVehicle(memberVM.Vehicle);
+                TempData["success"] = "Vehicle created successfully";
+                return RedirectToAction(nameof(Index), "Member");
+            }
+            catch
+            {
+                TempData["success"] = "Vehicle updated successfully";
+            }
+            return RedirectToAction(nameof(Index), "Member");
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Upsert(Softom.Application.Models.MV.MemberDetails MemberMV, List<IFormFile> files)
         {
             _ContactInformationService.UpdateContactInformation(MemberMV.ContactInformation);
@@ -226,7 +296,9 @@ namespace Softom.Application.UI.Controllers
                 _AddressService.UpdateAddress(MemberMV.Address);
             }
             catch
-            { TempData["success"] = "Member updated successfully"; }
+            { 
+                TempData["success"] = "Member updated successfully";
+            }
 
             TempData["success"] = "Member updated successfully";
             return RedirectToAction(nameof(Index));
@@ -234,18 +306,7 @@ namespace Softom.Application.UI.Controllers
 
         public IActionResult Delete(int MemberId)
         {
-            Member? obj = _MemberService.GetMemberById(MemberId);
-            if (obj is null)
-            {
-                return RedirectToAction("Error", "Home");
-            }
-            return View(obj);
-        }
-
-        [HttpPost]
-        public IActionResult Delete(Member obj)
-        {
-            bool deleted = _MemberService.DeleteMember(obj.MemberId);
+            bool deleted = _MemberService.DeleteMember(MemberId);
             if (deleted)
             {
                 TempData["success"] = "The Member has been deleted successfully.";
@@ -253,9 +314,9 @@ namespace Softom.Application.UI.Controllers
             }
             else
             {
-                TempData["error"] = "Failed to delete the Member.";
+                TempData["error"] = "Failed to delete the Payment.";
             }
-            return View();
-        }
+            return View();            
+        }        
     }
 }

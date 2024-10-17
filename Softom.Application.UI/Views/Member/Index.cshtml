@@ -45,7 +45,7 @@
                                 <td style="vertical-align: middle">@item.ContactInformation.PhoneNumber</td>
                                 <td style="vertical-align: middle">
                                     <div class="flex-shrink-0">
-                                        <a href="@Url.Action("Upsert", "Member", new { MemberId = item.MemberId })" class="btn btn-icon btn-active-color-primary btn-sm me-1">
+                                        <a href="@Url.Action("GetMemberDetailsById", "Member", new { MemberId = item.MemberId })" class="btn btn-icon btn-active-color-primary btn-sm me-1">
                                             <i class="fa fa-toggle-off fa-lg"></i>
                                         </a>                                      
                                         <a data-bs-toggle="modal" data-bs-target='#exampleModal-@(item.MemberId)' class="btn btn-icon btn-active-color-primary btn-sm me-1">
@@ -53,10 +53,13 @@
                                         </a>
                                         <a href="@Url.Action("MemberPaymentList", "Member", new { MemberId = item.MemberId })" class="btn btn-icon btn-active-color-primary btn-sm me-1">
                                             <i class="fab fa-cc-mastercard"></i>
+                                        </a> 
+                                        <a data-bs-toggle="modal" data-bs-target='#vehicleModal-@(item.MemberId)' class="btn btn-icon btn-active-color-primary btn-sm me-1">
+                                            <i class="fa fa-car fa-lg"></i>
                                         </a>
-                                        <a onclick="delete(@item.MemberId)" class="btn btn-icon btn-active-color-primary btn-sm">
+                                        <a href="@Url.Action("Delete", "Member", new { MemberId = item.MemberId })" class="btn btn-icon btn-active-color-primary btn-sm me-1">
                                             <i class="fa fa-trash fa-lg"></i>
-                                        </a>
+                                        </a>                                       
                                     </div>
                                 </td>
                             </tr>
@@ -97,6 +100,66 @@
                                                 <div class="modal-footer">
                                                     <button  type="submit" class="btn btn-outline-warning"><i class="bi bi-file-earmark-ppt"></i> Submit</button>
                                                     <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="vehicleModal-@(item.MemberId)" tabindex="-1" aria-labelledby="vehicleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-xl" style="border: 1px solid #aaa; border-radius:7px;">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-3 text-success" id="vehicleModalLabel">Vehicle Details</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body m-0">
+                                            <form method="post" class="row" asp-controller="Member" asp-action="CreateVehicle">
+
+                                                <input asp-for="@item.MemberId" name="MemberId" hidden />
+                                                
+                                                <div class="modal-body py-10 px-lg-17">
+                                                    <!--begin::Scroll-->
+                                                    <div class="scroll-y me-n7 pe-7" id="kt_modal_add_Vehicle_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_Vehicle_header" data-kt-scroll-wrappers="#kt_modal_add_Vehicle_scroll" data-kt-scroll-offset="300px">
+
+                                                        <!--begin::Input group-->
+                                                        <div class="form-group row">
+                                                            <label for="example-text-input" class="ms-2">Registration Number</label>
+                                                            <div class="col-12">
+                                                                <input asp-for="@Model.Vehicle.Registration" class="form-control" id="Registration" />
+                                                            </div>
+                                                        </div>
+                                                        <!--begin::Input group-->
+                                                        <div class="form-group row">
+                                                            <label for="example-text-input" class="ms-2">Make</label>
+                                                            <div class="col-12">
+                                                                <input asp-for="@Model.Vehicle.Make" class="form-control" id="Make" />
+                                                            </div>
+                                                        </div>
+                                                        <!--begin::Input group-->
+                                                        <div class="form-group row">
+                                                            <label for="example-text-input" class="ms-2">Model</label>
+                                                            <div class="col-12">
+                                                                <input asp-for="@Model.Vehicle.Model" class="form-control" id="Model" />
+                                                            </div>
+                                                        </div>
+                                                        <!--begin::Input group-->
+                                                        <div class="form-group row">
+                                                            <label for="example-text-input" class="ms-2">VIN Number</label>
+                                                            <div class="col-12">
+                                                                <input asp-for="@Model.Vehicle.VINNumber" class="form-control" id="VINNumber" />
+                                                            </div>
+                                                        </div>                                                       
+
+                                                    </div>
+                                                    <!--end::Scroll-->
+                                                </div>
+                                                <!--end::Modal body -->
+
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary btn-sm btn-hover-rise me-5 my-2">Submit</button>
+                                                    <button type="button" class="btn btn-danger btn-sm btn-hover-rise me-5 my-2" data-bs-dismiss="modal">Close</button>
                                                 </div>
                                             </form>
                                         </div>

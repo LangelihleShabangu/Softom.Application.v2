@@ -21,6 +21,7 @@ namespace Softom.Application.BusinessRules.Common.Interfaces
         IPaymentTypeRepository PaymentType { get; }
         IPaymentRepository Payment { get; }
         IStatusRepository Status { get; }
+        IVehicleRepository Vehicle { get; }
         void Save();
     }
 }

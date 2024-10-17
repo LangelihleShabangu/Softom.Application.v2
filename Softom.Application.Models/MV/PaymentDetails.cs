@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Softom.Application.Models.Entities;
 using System;
@@ -19,6 +20,8 @@ namespace Softom.Application.Models.MV
             PaymentsNotMade = new List<Payment>();
         }
         public int PaymentId { get; set; }
+        [BindProperty(Name = "PaymentTypeId")]
+        public int PaymentTypeId { get; set; }        
         public Payment? Payment { get; set; }
         public List<Payment>? PaymentList { get; set; }
 

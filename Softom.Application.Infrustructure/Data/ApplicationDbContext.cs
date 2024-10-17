@@ -17,18 +17,19 @@ namespace Softom.Application.Infrustructure.Data
         }
 
         public DbSet<Villa> Villa { get; set; }
-		public DbSet<Address> Address { get; set; }
-		public DbSet<VillaNumber> VillaNumbers { get; set; }
-        public DbSet<Amenity> Amenities { get; set; }
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+		public DbSet<Address> Address { get; set; }		
+        public DbSet<Amenity> Amenities { get; set; }        
         public DbSet<Booking> Bookings { get; set; }
-		public DbSet<Association> Association { get; set; }        
-        public DbSet<ContactInformation> ContactInformation { get; set; }
         public DbSet<Member> Member { get; set; }
         public DbSet<Status> Status { get; set; }        
         public DbSet<Payment> Payment { get; set; }
+        public DbSet<Vehicle> Vehicle { get; set; }
+        public DbSet<Association> Association { get; set; }
         public DbSet<PaymentType> PaymentType { get; set; }
+        public DbSet<VillaNumber> VillaNumbers { get; set; }
         public DbSet<PaymentStatus> PaymentStatus { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<ContactInformation> ContactInformation { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

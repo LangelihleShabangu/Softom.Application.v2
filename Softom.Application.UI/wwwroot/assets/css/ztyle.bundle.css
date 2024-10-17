@@ -4163,8 +4163,8 @@ input[type="button"].btn-block {
     color: #FFFFFF;
     text-align: center;
     white-space: nowrap;
-    background-color: #f7f8fa;
-    border: 1px solid #e2e5ec;
+    background-color: #e4e7ee;
+    border: 1px solid #e4e7ee;
     border-radius: 4px;
 }
 
@@ -49878,7 +49878,7 @@ code {
             .kt-widget.kt-widget--general-1 .kt-widget__wrapper .kt-widget__label .kt-widget__desc {
                 font-size: 1rem;
                 font-weight: 400;
-                color: #FFFFFF;
+                color: #0f0f0f;
             }
 
         .kt-widget.kt-widget--general-1 .kt-widget__wrapper .kt-widget__toolbar {
