@@ -47,7 +47,7 @@ namespace Softom.Application.BusinessRules.Services.Implementation
 
         public IEnumerable<Vehicle> GetAllVehicle()
         {
-            return _unitOfWork.Vehicle.GetAll();
+            return _unitOfWork.Vehicle.GetAll(includeProperties: "Status");
         }
 
         public Vehicle GetVehicleById(int id)

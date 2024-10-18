@@ -150,26 +150,25 @@ namespace Softom.Application.UI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Upsert(Vehicle vehicle)
+        public async Task<IActionResult> Upsert(VehicleDetails vehicleDetails)
         {
-            vehicle.Notes = "None";
-            vehicle.StatusId = 1; //Active
-            vehicle.CreatedBy = new Guid();
-            vehicle.ModifiedBy = new Guid();
-            vehicle.Createddate = DateTime.Now;
-            vehicle.Modifieddate = DateTime.Now;
-
+            Vehicle vehicle = new Vehicle();
+            vehicleDetails.Vehicle.Notes = "None";
+            vehicleDetails.Vehicle.StatusId = vehicleDetails.StatusId; //Active
+            vehicleDetails.Vehicle.CreatedBy = new Guid();
+            vehicleDetails.Vehicle.ModifiedBy = new Guid();
+            vehicleDetails.Vehicle.Createddate = DateTime.Now;
             try
             {
-                _VehicleService.UpdateVehicle(vehicle);
+                _VehicleService.UpdateVehicle(vehicleDetails.Vehicle);
                 TempData["success"] = "Vehicle created successfully";
-                return RedirectToAction(nameof(Index), "Member");
+                return RedirectToAction("GetVehicleDetailsById", "Member", new { MemberId = vehicleDetails.Vehicle.MemberId });
             }
             catch
             {
                 TempData["success"] = "Vehicle updated successfully";
             }
-            return RedirectToAction(nameof(Index), "Member");
+            return RedirectToAction("GetVehicleDetailsById", "Member", new { MemberId = vehicleDetails.Vehicle.MemberId });
         }
 
         public IActionResult Delete(int VehicleId)
@@ -181,6 +180,7 @@ namespace Softom.Application.UI.Controllers
             }
             else
             {
+                _VehicleService.DeleteVehicle(VehicleId);
                 TempData["success"] = "The Vehicle has been deleted successfully.";
                 return RedirectToAction("GetVehicleDetailsById", "Member", new { MemberId = obj.MemberId });
             }
