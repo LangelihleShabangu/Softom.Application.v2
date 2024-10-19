@@ -27,7 +27,7 @@
                     <a class="nav-link active" data-bs-toggle="modal" data-bs-target='#exampleModal1'>
                         <i class="flaticon-upload-1"></i> Paid Members Report
                     </a>
-                </li>               
+                </li>
             </ul>
         </div>
     </div>
@@ -42,9 +42,18 @@
                             <div class="col-lg-4 col-md-9 col-sm-12">
                                 <input asp-for="@Model.PaymentDate" class="form-control" id="kt_daterangepicker_1" readonly placeholder="Select time" type="text" />
                             </div>
-                            <div class="col-lg-9 ml-lg-auto">
-                                <button type="submit" class="btn btn-brand">Submit</button>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-3 col-sm-12">Choose Payment Type</label>
+                            <div class="col-lg-4 col-md-9 col-sm-12">
+                                <select asp-for="@Model.PaymentTypeId" asp-items="@Model.PaymentTypeList" name="PaymentTypeId" aria-label="Select a Payment Type" class="form-control kt-select2" id="kt_select3" data-placeholder="Select a Location Payment Type..." class="form-select fw-bold">
+                                    <option disabled selected>-Select Payment Type-</option>
+                                </select>
                             </div>
+                        </div>
+
+                        <div class="col-lg-9 ml-lg-auto">
+                            <button type="submit" class="btn btn-brand">Submit</button>
                         </div>
                     </div>
                 </form>
@@ -148,6 +157,14 @@
                                     <input asp-for="@Model.PaymentDate" class="form-control" id="kt_daterangepicker_1" readonly placeholder="Select time" type="text" />
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">Choose Payment Type</label>
+                                <div class="col-lg-4 col-md-9 col-sm-12">
+                                    <select asp-for="@Model.PaymentTypeId" asp-items="@Model.PaymentTypeList" name="PaymentTypeId" aria-label="Select a Payment Type" class="form-control kt-select2" id="kt_select3" data-placeholder="Select a Location Payment Type..." class="form-select fw-bold">
+                                        <option disabled selected>-Select Payment Type-</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!--end::Modal body -->
@@ -179,6 +196,14 @@
                                 <label class="col-form-label col-lg-3 col-sm-12">Choose Start and End Date</label>
                                 <div class="col-lg-4 col-md-9 col-sm-12">
                                     <input asp-for="@Model.PaymentDate" class="form-control" id="kt_daterangepicker_1" readonly placeholder="Select time" type="text" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-3 col-sm-12">Choose Payment Type</label>
+                                <div class="col-lg-4 col-md-9 col-sm-12">
+                                    <select asp-for="@Model.PaymentTypeId" asp-items="@Model.PaymentTypeList" name="PaymentTypeId" aria-label="Select a Payment Type" class="form-control kt-select2" id="kt_select3" data-placeholder="Select a Location Payment Type..." class="form-select fw-bold">
+                                        <option disabled selected>-Select Payment Type-</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>

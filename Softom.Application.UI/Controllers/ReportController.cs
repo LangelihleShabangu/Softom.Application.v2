@@ -49,7 +49,7 @@ namespace Softom.Application.UI.Controllers
         {
             List<Payment> payments = new List<Payment>();
             var PamentMadeList = _PaymentService.GetAllPayment().Where(f =>
-                f.PaymentTypeId == 1 &&
+                f.PaymentTypeId == paymentDetails.PaymentTypeId &&
                 f.PaymentDate >= Convert.ToDateTime(paymentDetails.PaymentDate.Split("-")[0]) &&
                 f.PaymentDate <= Convert.ToDateTime(paymentDetails.PaymentDate.Split("-")[1])).ToList();
 
@@ -88,7 +88,7 @@ namespace Softom.Application.UI.Controllers
         {
             List<Payment> payments = new List<Payment>();
             var PamentMadeList = _PaymentService.GetAllPayment().Where(f =>
-                f.PaymentTypeId == 1 &&
+                f.PaymentTypeId == paymentDetails.PaymentTypeId &&
                 f.PaymentDate >= Convert.ToDateTime(paymentDetails.PaymentDate.Split("-")[0]) &&
                 f.PaymentDate <= Convert.ToDateTime(paymentDetails.PaymentDate.Split("-")[1])).ToList();
 
@@ -122,9 +122,10 @@ namespace Softom.Application.UI.Controllers
         {
             List<Payment> payments = new List<Payment>();
             var PamentMadeList = _PaymentService.GetAllPayment().Where(f =>
+                f.PaymentTypeId == paymentDetails.PaymentTypeId &&
                 f.PaymentDate >= Convert.ToDateTime(paymentDetails.PaymentDate.Split("-")[0]) &&
                 f.PaymentDate <= Convert.ToDateTime(paymentDetails.PaymentDate.Split("-")[1])).ToList();
-            
+           
             var qry = _MemberService.GetAllMember().SelectMany
             (
                 foo => PamentMadeList.Where(bar => foo.MemberId == bar.MemberId).DefaultIfEmpty(),
@@ -148,6 +149,12 @@ namespace Softom.Application.UI.Controllers
                     paymentDetails.PaymentsNotMade.Add(new Application.Models.Payment() { Member = item.Foo });
                 }
             }
+
+            paymentDetails.PaymentTypeList = _PaymentTypeService.GetAllPaymentType().Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.PaymentTypeId.ToString()
+            });
 
             return View("Index",paymentDetails);
         }
