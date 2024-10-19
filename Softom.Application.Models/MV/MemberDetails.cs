@@ -21,6 +21,7 @@ namespace Softom.Application.Models.MV
             VehicleList = new List<Vehicle>();
         }
         public int MemberId { get; set; }
+        public int PaymentTypeId { get; set; }        
         public Member? Member { get; set; }
         public ContactInformation? ContactInformation { get; set; }
         public Address? Address { get; set; }

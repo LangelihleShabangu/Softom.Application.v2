@@ -217,7 +217,7 @@ namespace Softom.Application.UI.Controllers
             {
                 _PaymentService.DeletePayment(PaymentId);
                 TempData["success"] = "The Payment has been removed successfully.";
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("GetPaymentDetailsById", "Member", new { MemberId = obj.MemberId });
             }           
         }
 

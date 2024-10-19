@@ -27,12 +27,12 @@ namespace Softom.Application.UI.Controllers
         private readonly IPaymentTypeService _PaymentTypeService;
         private readonly UserManager<ApplicationUser> _userManager;
         public MemberController(
-            IMemberService MemberService, 
-            IAddressService AddressService, 
+            IMemberService MemberService,
+            IAddressService AddressService,
             IContactInformationService ContactInformationService,
-            IAssociationService AssociationService, 
-            IPaymentTypeService PaymentTypeService, 
-            UserManager<ApplicationUser> userManager, 
+            IAssociationService AssociationService,
+            IPaymentTypeService PaymentTypeService,
+            UserManager<ApplicationUser> userManager,
             IPaymentServices PaymentService,
             IVehicleService VehicleService)
         {
@@ -65,14 +65,14 @@ namespace Softom.Application.UI.Controllers
 
         public IActionResult MemberDetails()
         {
-			return View();
-		}
+            return View();
+        }
 
-	    [HttpGet]
+        [HttpGet]
         public IActionResult MemberPaymentList(int MemberId)
         {
             var memberVM = new PaymentDetails();
-            memberVM.PaymentList =  _PaymentService.GetAllPayment().Where(f=>f.MemberId == MemberId).ToList();
+            memberVM.PaymentList = _PaymentService.GetAllPayment().Where(f => f.MemberId == MemberId).ToList();
             memberVM.Member = _MemberService.GetMemberById(MemberId);
             PaymentDetails paymentDetailsVM = new()
             {
@@ -85,7 +85,31 @@ namespace Softom.Application.UI.Controllers
             memberVM.paymentDetailsVM = paymentDetailsVM;
             return View("MemberPaymentList", memberVM);
         }
-        
+
+
+        [HttpPost]
+        public IActionResult CreateMemberPayments(Softom.Application.UI.ViewModels.MemberVM memberVM)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var user = _userManager.FindByIdAsync(userId).GetAwaiter().GetResult();
+
+            var payment = new Payment();
+            payment.PaymentStatusId = 1; /* Active */
+            payment.MemberId = memberVM.MemberId;
+            payment.PaymentTypeId = memberVM.PaymentTypeId;
+            payment.Amount = memberVM.Payment.Amount;
+            payment.Notes = userId.ToString();
+            payment.Createddate = DateTime.Now;
+            payment.PaymentDate = DateTime.Now;
+            payment.Modifieddate = DateTime.Now;
+
+            _PaymentService.CreatePayment(payment);
+            TempData["success"] = "The Payment has been created successfully.";
+
+            return RedirectToAction("GetPaymentDetailsById", "Member", new { MemberId = memberVM.MemberId });
+        }
+
         [HttpPost]
         public IActionResult CreatePayments(Softom.Application.UI.ViewModels.MemberVM memberVM)
         {
@@ -104,20 +128,10 @@ namespace Softom.Application.UI.Controllers
             payment.PaymentDate = DateTime.Now;
             payment.Modifieddate = DateTime.Now;
 
-            //if (ModelState.IsValid)
-            //{
-                _PaymentService.CreatePayment(payment);
-                TempData["success"] = "The Payment has been created successfully.";
-                var invoiceVM = new InvoiceVM();
-                invoiceVM.Payment = _PaymentService.GetPaymentById(payment.PaymentId);
-                invoiceVM.Member = _MemberService.GetMemberById(invoiceVM.Payment.MemberId);
+            _PaymentService.CreatePayment(payment);
+            TempData["success"] = "The Payment has been created successfully.";
 
-                invoiceVM.Association = _AssociationService.GetAssociationById(invoiceVM.Member.AssociationId.Value);
-                var byteInfoStatement = new Softom.Application.BusinessRules.Generate_PDF.CreateInvoicePDF().GeneratePDFFile(invoiceVM).ToArray();
-                File(byteInfoStatement, "APPLICATION/pdf", "Payment_" + System.DateTime.Now.ToString("dd MMMM yyyy") + "_" + invoiceVM.Member.ContactInformation.Firstname + "_" + invoiceVM.Member.ContactInformation.Surname + ".pdf");
-                return RedirectToAction( "MemberPaymentDetails","Payment", new { PaymentId = payment.PaymentId });
-            //}
-            //return RedirectToAction(nameof(Index));
+            return RedirectToAction("MemberPaymentDetails", "Payment", new { PaymentId = payment.PaymentId });
         }
 
         [HttpPost]
@@ -160,8 +174,8 @@ namespace Softom.Application.UI.Controllers
         public IActionResult MemberSummary(int MemberId)
         {
             List<Payment> payments = new List<Payment>();
-            
-            var PaymentList = from x in _PaymentService.GetAllPayment().Where(f=>f.MemberId == MemberId)
+
+            var PaymentList = from x in _PaymentService.GetAllPayment().Where(f => f.MemberId == MemberId)
                               group x by x.PaymentType.Name;
             var PaymentResults = from y in PaymentList
                                  select new
@@ -208,9 +222,9 @@ namespace Softom.Application.UI.Controllers
             });
 
             MemberDetails.Member = obj;
-            MemberDetails.Association = association;            
-            MemberDetails.ContactInformation = obj.ContactInformation;  
-            MemberDetails.Address = obj.Address;           
+            MemberDetails.Association = association;
+            MemberDetails.ContactInformation = obj.ContactInformation;
+            MemberDetails.Address = obj.Address;
             return View("MemberDetails", MemberDetails);
         }
 
@@ -230,7 +244,7 @@ namespace Softom.Application.UI.Controllers
                     Value = u.PaymentTypeId.ToString()
                 })
             };
-          
+
             MemberDetails.Member = obj;
             MemberDetails.Association = association;
             MemberDetails.PaymentList = paymentsList;
@@ -243,7 +257,7 @@ namespace Softom.Application.UI.Controllers
         [HttpGet]
         public IActionResult GetVehicleDetailsById(int MemberId)
         {
-            var MemberDetails = new MemberDetails();  
+            var MemberDetails = new MemberDetails();
             var obj = _MemberService.GetMemberById(MemberId);
             var vehicleList = _VehicleService.GetAllVehicle().Where(f => f.MemberId == MemberId).ToList();
             MemberDetails.Member = obj;
@@ -341,7 +355,7 @@ namespace Softom.Application.UI.Controllers
                 TempData["success"] = "Member updated successfully";
                 return RedirectToAction(nameof(Index));
             }
-        }        
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreateMemberVehicle(Softom.Application.UI.ViewModels.MemberVM memberVM)
@@ -357,14 +371,14 @@ namespace Softom.Application.UI.Controllers
             try
             {
                 _VehicleService.CreateVehicle(memberVM.Vehicle);
-                TempData["success"] = "Vehicle created successfully";                                
+                TempData["success"] = "Vehicle created successfully";
                 return RedirectToAction("GetVehicleDetailsById", "Member", new { MemberId = memberVM.MemberId });
             }
             catch
             {
                 TempData["success"] = "Vehicle updated successfully";
             }
-            return RedirectToAction("GetVehicleDetailsById", "Member", new { MemberId = memberVM.MemberId });            
+            return RedirectToAction("GetVehicleDetailsById", "Member", new { MemberId = memberVM.MemberId });
         }
 
         [HttpPost]
@@ -400,7 +414,7 @@ namespace Softom.Application.UI.Controllers
                 _AddressService.UpdateAddress(MemberMV.Address);
             }
             catch
-            { 
+            {
                 TempData["success"] = "Member updated successfully";
             }
 
@@ -420,7 +434,7 @@ namespace Softom.Application.UI.Controllers
             {
                 TempData["error"] = "Failed to delete the Payment.";
             }
-            return View();            
-        }        
+            return View();
+        }
     }
 }
