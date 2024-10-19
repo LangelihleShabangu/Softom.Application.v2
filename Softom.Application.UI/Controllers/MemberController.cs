@@ -341,6 +341,30 @@ namespace Softom.Application.UI.Controllers
                 TempData["success"] = "Member updated successfully";
                 return RedirectToAction(nameof(Index));
             }
+        }        
+
+        [HttpPost]
+        public async Task<IActionResult> CreateMemberVehicle(Softom.Application.UI.ViewModels.MemberVM memberVM)
+        {
+            memberVM.Vehicle.Notes = "None";
+            memberVM.Vehicle.StatusId = 1; //Active
+            memberVM.Vehicle.CreatedBy = new Guid();
+            memberVM.Vehicle.ModifiedBy = new Guid();
+            memberVM.Vehicle.Createddate = DateTime.Now;
+            memberVM.Vehicle.Modifieddate = DateTime.Now;
+            memberVM.Vehicle.MemberId = memberVM.MemberId;
+
+            try
+            {
+                _VehicleService.CreateVehicle(memberVM.Vehicle);
+                TempData["success"] = "Vehicle created successfully";                                
+                return RedirectToAction("GetVehicleDetailsById", "Member", new { MemberId = memberVM.MemberId });
+            }
+            catch
+            {
+                TempData["success"] = "Vehicle updated successfully";
+            }
+            return RedirectToAction("GetVehicleDetailsById", "Member", new { MemberId = memberVM.MemberId });            
         }
 
         [HttpPost]

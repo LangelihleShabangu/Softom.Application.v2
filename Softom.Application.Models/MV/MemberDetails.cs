@@ -15,6 +15,7 @@ namespace Softom.Application.Models.MV
             Member = new Member();
             Address = new Address();
             Payment = new Payment();
+            Vehicle = new Vehicle();
             Association = new Association();
             PaymentList = new List<Payment>();
             VehicleList = new List<Vehicle>();
@@ -24,6 +25,7 @@ namespace Softom.Application.Models.MV
         public ContactInformation? ContactInformation { get; set; }
         public Address? Address { get; set; }
         public List<Member>? Members { get; set; }
+        public Vehicle? Vehicle { get; set; }
         public Payment? Payment { get; set; }
         public List<Payment> PaymentList { get; set; }
         public List<Vehicle> VehicleList { get; set; }
